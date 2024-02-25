@@ -1,0 +1,17 @@
+server:
+  port: 9089
+
+spring:
+  application:
+    name: inventory
+  datasource:
+    url: jdbc:mysql://localhost:3306/inventory
+    name: ppanda
+    username: root
+    password: Priya@1997
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true  
