@@ -22,7 +22,7 @@ public class CustomException {
 	
 	  private int statusCode;
 	  private String status;
-	  @JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd hh:mm:ss")
+	  @JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
 	  @JsonSerialize(using = LocalDateTimeSerializer.class)
 	  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	  private LocalDateTime timestamp;
