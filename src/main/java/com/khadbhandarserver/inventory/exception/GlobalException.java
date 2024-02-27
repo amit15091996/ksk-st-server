@@ -1,8 +1,11 @@
 package com.khadbhandarserver.inventory.exception;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -76,7 +79,7 @@ public class GlobalException {
 		  AppConstant.Bad_Request,
 		  AppConstant.Bad_Request_desc,
 		  LocalDateTime.now(),
-		  methodArgument.getBody().getDetail(),
+		  methodArgument.getAllErrors().stream().map(t ->t.getDefaultMessage()).collect(Collectors.toList()).toString(),
 		  request.getDescription(false)
 		  );
 		
