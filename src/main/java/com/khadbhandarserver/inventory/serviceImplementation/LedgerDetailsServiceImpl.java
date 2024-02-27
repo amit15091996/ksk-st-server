@@ -42,8 +42,7 @@ public class LedgerDetailsServiceImpl implements LedgerDetailsService {
 		}
 		}
 		catch(Exception e) {
-			System.out.println(e.getMessage());
-			throw new BadRequest(e.getMessage());
+			throw new BadRequest(e.getCause().getCause().getMessage());
 		}
 	   return responseMap;
 		

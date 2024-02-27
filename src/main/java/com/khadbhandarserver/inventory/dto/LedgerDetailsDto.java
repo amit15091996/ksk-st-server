@@ -2,6 +2,7 @@ package com.khadbhandarserver.inventory.dto;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,8 @@ public class LedgerDetailsDto {
 	private String fatherName;
 	@NotBlank(message = "Please enter Address(Mandatory)")
 	private String address;
-	@NotBlank(message = "Please enter Mobile Number(Mandatory),mobile number should be 10 digit")
+	@NotBlank(message = "Please enter Mobile Number(Mandatory)")
+	@Size(max = 10,min = 10,message = "Mobile number should be 10 digit")
 	private String mobileNumber;
 
 
