@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.khadbhandarserver.inventory.dto.InventoryItemDto;
 import com.khadbhandarserver.inventory.dto.LedgerDetailsDto;
 import com.khadbhandarserver.inventory.dto.StockDetailsDto;
+import com.khadbhandarserver.inventory.repository.ProductCategoryRepository;
 import com.khadbhandarserver.inventory.service.InventoryItemService;
 import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
@@ -35,6 +36,7 @@ public class InventoryController {
 	
 	@Autowired
 	private InventoryItemService inventoryItemService;
+	
 	
 	@PostMapping("/insert-ledger-details")
 	public ResponseEntity<Map<Object, Object>> saveLedgerDetails(@RequestBody @Valid LedgerDetailsDto ledgerDetailsDto){
@@ -75,6 +77,8 @@ public class InventoryController {
 	
 	@PostMapping("/insert-inventory-item")
 	public ResponseEntity<Map<Object, Object>> saveInventoryItem(@RequestBody @Valid InventoryItemDto inventoryItemDto){
+		
+		
 		
 		return ResponseEntity.ok(this.inventoryItemService.insertInventoryItem(inventoryItemDto));
 	}
