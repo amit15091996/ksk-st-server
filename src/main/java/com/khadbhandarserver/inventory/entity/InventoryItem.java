@@ -1,7 +1,5 @@
 package com.khadbhandarserver.inventory.entity;
 
-import org.hibernate.annotations.Type;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,27 +14,25 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "STOCK_DETAILS")
+@NoArgsConstructor
+@Table(name = "INVENTORY_ITEM")
 @Entity
-public class StockDetails {
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "stock_details_sequence")
+public class InventoryItem {
+	@TableGenerator(allocationSize = 1,initialValue = 0,name = "inventory_item_details_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="stock_details_sequence" )
-	private Long stockId;
+	@GeneratedValue(strategy = GenerationType.TABLE,generator ="inventory_item_details_sequence" )
+	private Long inventoryItemId;
 	@Column(length = 50,nullable = false)
-	private String stockName;
+	private String inventoryItemName;
 	@Column(length = 50,nullable = false)
-	private String stockGroup;
+	private String inventoryItemGroup;
 	@Column(nullable = false)
-	private int stockQuantity;
+	private int inventoryItemQuantity;
 	@Column(length = 20,nullable = false)
-	private String stockUnit;
+	private String inventoryItemUnit;
 	@Column(nullable = false)
-	private double stockPrice;
+	private double inventoryItemPrice;
 	@Column( columnDefinition="Decimal(20,3)")
-	private double totalStockAmount;
-	
-
+	private double inventoryItemTotalAmount;
 }
