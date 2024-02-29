@@ -22,6 +22,8 @@ public class LedgerDetailsDto {
 	@NotBlank(message = "Please enter Mobile Number(Mandatory)")
 	@Size(max = 10,min = 10,message = "Mobile number should be 10 digit")
 	private String mobileNumber;
+	@NotBlank(message = "Please enter Area of customer(Mandatory)")
+	private String customerArea;
 
 
 }

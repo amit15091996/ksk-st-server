@@ -5,7 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
 import lombok.AllArgsConstructor;
@@ -17,23 +16,24 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "STOCK_DETAILS")
 @Entity
-@Table(name = "LEDGER_DETAILS")
-public class LedgerDetails {
-	
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "ledger_details_sequence")
+public class StockDetails {
+	@TableGenerator(allocationSize = 1,initialValue = 0,name = "stock_details_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="ledger_details_sequence" )
-	private long ledgerId;
+	@GeneratedValue(strategy = GenerationType.TABLE,generator ="stock_details_sequence" )
+	private Long stockId;
 	@Column(length = 50,nullable = false)
-	private String customerName;
+	private String stockName;
 	@Column(length = 50,nullable = false)
-	private String fatherName;
-	@Column(length = 500,nullable = false)
-	private String address;
-	@Column(length = 10,nullable = false)
-	private String mobileNumber;
-	@Column(length = 50,nullable = false)
-	private String customerArea;
+	private String stockGroup;
+	@Column(nullable = false)
+	private int stockQuantity;
+	@Column(length = 20,nullable = false)
+	private String stockUnit;
+	@Column(nullable = false)
+	private double stockPrice;
+	private double totalStockAmount;
+	
 
 }

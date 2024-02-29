@@ -13,6 +13,11 @@ public class AppConstant {
 	public static final String someThingWenWrong="Hmm some thing went wrong !! please check your input field value";
 	public static final String inactiveRequisation="Sorry No inactive requisation available at this moment";
 	public static final String roadblock="Sorry we hit a road block, please try again with valid input field";
+	public static final String dataDeletedSuccesFully="Record Deleted Successfully thank you!";
+	public static final String noRecordFound="No Record Found !! with the Id ";
+	public static final String recordUpdatedSuccessFully="Record updated Successfully with Id ";
+	public static final String requestBodyMissing="Required Request Body Is Missing ";
+
 
 
 	public static final int ok=200;
