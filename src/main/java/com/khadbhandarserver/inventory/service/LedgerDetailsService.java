@@ -10,4 +10,7 @@ import com.khadbhandarserver.inventory.entity.LedgerDetails;
 
 public interface LedgerDetailsService {
 	Map<Object, Object> ledgerDetails(LedgerDetailsDto ledgerDetailsDto);
+	Map<Object, Object> deleteLedgerDetails(Long Id);
+	Map<Object, Object> updateLedgerDetails(Long ledgerId,LedgerDetailsDto ledgerDetailsDto);
+	
 }
