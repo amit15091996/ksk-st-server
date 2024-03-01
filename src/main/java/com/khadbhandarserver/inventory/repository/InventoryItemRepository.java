@@ -16,10 +16,10 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
 
 
 	@Modifying(flushAutomatically = true,clearAutomatically = true)
-	@Query("UPDATE InventoryItem ii  SET ii.inventoryItemName=:inventoryItemName,ii.inventoryItemGroup=:inventoryItemGroup,ii.inventoryItemQuantity=:inventoryItemQuantity,ii.inventoryItemUnit=:inventoryItemUnit,ii.inventoryItemPrice=:inventoryItemPrice,ii.inventoryItemTotalAmount=:inventoryItemTotalAmount WHERE ii.inventoryItemId=:inventoryItemId")
+	@Query("UPDATE InventoryItem ii  SET ii.inventoryItemName=:inventoryItemName,ii.inventoryItemCategory=:inventoryItemCategory,ii.inventoryItemQuantity=:inventoryItemQuantity,ii.inventoryItemUnit=:inventoryItemUnit,ii.inventoryItemPrice=:inventoryItemPrice,ii.inventoryItemTotalAmount=:inventoryItemTotalAmount WHERE ii.inventoryItemId=:inventoryItemId")
 	public void updateInventoryItemDetals(
 			@Param("inventoryItemName") String inventoryItemName,
-			@Param("inventoryItemGroup") String inventoryItemGroup,
+			@Param("inventoryItemCategory") String inventoryItemCategory,
 			@Param("inventoryItemQuantity") int inventoryItemQuantity,
 			@Param("inventoryItemUnit") String inventoryItemUnit,
 			@Param("inventoryItemPrice") double inventoryItemPrice,

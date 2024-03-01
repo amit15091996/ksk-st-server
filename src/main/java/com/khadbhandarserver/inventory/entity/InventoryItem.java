@@ -2,15 +2,21 @@ package com.khadbhandarserver.inventory.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
+
+import com.khadbhandarserver.inventory.entity.ProductCategory;
 
 @Getter
 @Setter
@@ -26,7 +32,7 @@ public class InventoryItem {
 	@Column(length = 50,nullable = false)
 	private String inventoryItemName;
 	@Column(length = 50,nullable = false)
-	private String inventoryItemGroup;
+	private String inventoryItemCategory;
 	@Column(nullable = false)
 	private int inventoryItemQuantity;
 	@Column(length = 20,nullable = false)
@@ -35,4 +41,8 @@ public class InventoryItem {
 	private double inventoryItemPrice;
 	@Column( columnDefinition="Decimal(20,3)")
 	private double inventoryItemTotalAmount;
+	
+	
 }
+
+

@@ -17,7 +17,7 @@ public class StockDetailsDto {
 	@NotBlank(message = "Please enter stock name (Mandatory)")
 	private String stockName;
 	@NotBlank(message = "Please enter stock name(Mandatory)")
-	private String stockGroup;
+	private String stockCategory;
 	@NotNull(message = "Please enter stock quantity(Mandatory)")
 	private int stockQuantity;
 	@NotBlank(message = "Please enter stock unit(Mandatory)")

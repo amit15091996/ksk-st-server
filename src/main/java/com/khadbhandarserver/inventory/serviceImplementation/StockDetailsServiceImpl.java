@@ -22,7 +22,7 @@ public class StockDetailsServiceImpl implements StockDetailsService {
 		Map<Object, Object> stockDetailsMap=new HashMap<>();
 		
 		StockDetails stockDetails=new StockDetails();
-		stockDetails.setStockGroup(stockDetailsDto.getStockGroup());
+		stockDetails.setStockCategory(stockDetailsDto.getStockCategory());
 		stockDetails.setStockName(stockDetailsDto.getStockName());
 		stockDetails.setStockPrice(stockDetailsDto.getStockPrice());
 		stockDetails.setStockUnit(stockDetailsDto.getStockUnit());
@@ -68,7 +68,7 @@ public class StockDetailsServiceImpl implements StockDetailsService {
 			try {
 			this.stockDetailsRepository.updateStockDetals(
 					stockDetailsDto.getStockName(),
-					stockDetailsDto.getStockGroup(),
+					stockDetailsDto.getStockCategory(),
 					stockDetailsDto.getStockQuantity(),
 					stockDetailsDto.getStockUnit(),
 					stockDetailsDto.getStockPrice(),

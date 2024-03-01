@@ -28,7 +28,7 @@ public class StockDetails {
 	@Column(length = 50,nullable = false)
 	private String stockName;
 	@Column(length = 50,nullable = false)
-	private String stockGroup;
+	private String stockCategory;
 	@Column(nullable = false)
 	private int stockQuantity;
 	@Column(length = 20,nullable = false)

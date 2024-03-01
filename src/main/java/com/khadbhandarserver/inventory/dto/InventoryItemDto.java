@@ -16,8 +16,8 @@ public class InventoryItemDto {
 	
 	@NotBlank(message = "Please enter Inventory Item name (Mandatory)")
 	private String inventoryItemName;
-	@NotBlank(message = "Please enter Inventory Item name(Mandatory)")
-	private String inventoryItemGroup;
+	@NotBlank(message = "Please enter Inventory Item category (Mandatory)")
+	private String inventoryItemCategory;
 	@NotNull(message = "Please enter Inventory Item quantity(Mandatory)")
 	private int inventoryItemQuantity;
 	@NotBlank(message = "Please enter Inventory Item unit(Mandatory)")
