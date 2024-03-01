@@ -1,8 +1,7 @@
 package com.khadbhandarserver.inventory.entity;
 
-import javax.swing.plaf.synth.SynthListUI;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -17,9 +16,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
-
 import java.util.List;
+import org.springframework.data.annotation.Immutable;
 
 @Getter
 @Setter
@@ -27,6 +25,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "CATEGORY_DETAILS")
 @Entity
+@Immutable
 public class ProductCategory {
 	
 	@TableGenerator(allocationSize = 1,initialValue = 0,name = "category_details_sequence")
@@ -38,8 +37,20 @@ public class ProductCategory {
 	@Column(length = 50,nullable = false)
 	private String categoryDesc;
 	
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "inventoryItemGroup",referencedColumnName = "CategoryName")
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
+	@JoinColumn(name = "inventoryItemCategory",referencedColumnName = "CategoryName")
 	private List<InventoryItem> inventoryItem;
+	
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
+	@JoinColumn(name = "stockCategory",referencedColumnName = "CategoryName")
+	private List<StockDetails> stockDetails;
+	
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
+	@JoinColumn(name = "soldItemCategory",referencedColumnName = "CategoryName")
+	private List<SalesRecords> salesRecords;
+	
+	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
+	@JoinColumn(name = "purchasedItemCategory",referencedColumnName = "CategoryName")
+	private List<PurchaseRecord> purchaseRecord;
 
 }

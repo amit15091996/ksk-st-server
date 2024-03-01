@@ -26,7 +26,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 		
         InventoryItem inventoryItem=new InventoryItem();
         inventoryItem.setInventoryItemName(inventoryItemDto.getInventoryItemName());
-        inventoryItem.setInventoryItemGroup(inventoryItemDto.getInventoryItemGroup());
+        inventoryItem.setInventoryItemCategory(inventoryItemDto.getInventoryItemCategory());
         inventoryItem.setInventoryItemPrice(inventoryItemDto.getInventoryItemPrice());
         inventoryItem.setInventoryItemQuantity(inventoryItemDto.getInventoryItemQuantity());
         inventoryItem.setInventoryItemUnit(inventoryItemDto.getInventoryItemUnit());
@@ -74,7 +74,7 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 			
 				this.inventoryItemRepository.updateInventoryItemDetals(
 						inventoryItemDto.getInventoryItemName(),
-						inventoryItemDto.getInventoryItemGroup(),
+						inventoryItemDto.getInventoryItemCategory(),
 						inventoryItemDto.getInventoryItemQuantity(),
 						inventoryItemDto.getInventoryItemUnit(),
 						inventoryItemDto.getInventoryItemPrice(),

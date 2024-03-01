@@ -15,10 +15,10 @@ import jakarta.transaction.Transactional;
 public interface StockDetailsRepository extends JpaRepository<StockDetails, Long>{
 
 	@Modifying(flushAutomatically = true,clearAutomatically = true)
-	@Query("UPDATE StockDetails sd  SET sd.stockName=:stockName,sd.stockGroup=:stockGroup,sd.stockQuantity=:stockQuantity,sd.stockUnit=:stockUnit,sd.stockPrice=:stockPrice,sd.totalStockAmount=:totalStockAmount WHERE sd.stockId=:stockId")
+	@Query("UPDATE StockDetails sd  SET sd.stockName=:stockName,sd.stockCategory=:stockCategory,sd.stockQuantity=:stockQuantity,sd.stockUnit=:stockUnit,sd.stockPrice=:stockPrice,sd.totalStockAmount=:totalStockAmount WHERE sd.stockId=:stockId")
 	public void updateStockDetals(
 			@Param("stockName") String stockName,
-			@Param("stockGroup") String stockGroup,
+			@Param("stockCategory") String stockCategory,
 			@Param("stockQuantity") int stockQuantity,
 			@Param("stockUnit") String stockUnit,
 			@Param("stockPrice") double stockPrice,

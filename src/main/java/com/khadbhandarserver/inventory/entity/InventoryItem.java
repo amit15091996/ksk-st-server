@@ -32,7 +32,7 @@ public class InventoryItem {
 	@Column(length = 50,nullable = false)
 	private String inventoryItemName;
 	@Column(length = 50,nullable = false)
-	private String inventoryItemGroup;
+	private String inventoryItemCategory;
 	@Column(nullable = false)
 	private int inventoryItemQuantity;
 	@Column(length = 20,nullable = false)
@@ -44,3 +44,5 @@ public class InventoryItem {
 	
 	
 }
+
+

@@ -11,14 +11,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.khadbhandarserver.inventory.dto.InventoryItemDto;
 import com.khadbhandarserver.inventory.dto.LedgerDetailsDto;
+import com.khadbhandarserver.inventory.dto.PurchaseRecordDto;
+import com.khadbhandarserver.inventory.dto.SalesRecordDto;
 import com.khadbhandarserver.inventory.dto.StockDetailsDto;
-import com.khadbhandarserver.inventory.repository.ProductCategoryRepository;
 import com.khadbhandarserver.inventory.service.InventoryItemService;
 import com.khadbhandarserver.inventory.service.LedgerDetailsService;
+import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
+import com.khadbhandarserver.inventory.service.PurchaseRecordService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +39,11 @@ public class InventoryController {
 	@Autowired
 	private InventoryItemService inventoryItemService;
 	
+	@Autowired
+	private SalesRecordService salesRecordService;
+	
+	@Autowired
+	private PurchaseRecordService purchaseRecordService;
 	
 	@PostMapping("/insert-ledger-details")
 	public ResponseEntity<Map<Object, Object>> saveLedgerDetails(@RequestBody @Valid LedgerDetailsDto ledgerDetailsDto){
@@ -94,5 +101,51 @@ public class InventoryController {
 		
 		return ResponseEntity.ok(this.inventoryItemService.deleteInventoryItem(inventoryId));
 	}
+	
+	
+	
+	@PostMapping("/insert-sales-record")
+	public ResponseEntity<Map<Object, Object>> saveSalesRecord(@RequestBody @Valid SalesRecordDto salesRecordDto){
+		
+		return ResponseEntity.ok(this.salesRecordService.insertSoldItem(salesRecordDto));
+	}
+	
+	@PutMapping("/update-sales-record/{soldItemId}")
+	public ResponseEntity<Map<Object, Object>> updateSalesRecord(@PathVariable(name = "soldItemId") Long soldItemId,@RequestBody @Valid SalesRecordDto salesRecordDto){
+		
+		return ResponseEntity.ok(this.salesRecordService.updateSoldItem(soldItemId, salesRecordDto));
+	}
+
+	@DeleteMapping("/delete-sales-record/{soldItemId}")
+	public ResponseEntity<Map<Object, Object>> deleteSalesRecord(@PathVariable(name = "soldItemId") Long soldItemId){
+		
+		return ResponseEntity.ok(this.salesRecordService.deleteSoldItem(soldItemId));
+	}
+	
+	
+	
+	@PostMapping("/insert-purchase-record")
+	public ResponseEntity<Map<Object, Object>> savePurchaseRecord(@RequestBody @Valid PurchaseRecordDto purchaseRecordDto){
+		
+		return ResponseEntity.ok(this.purchaseRecordService.insertPurchaseRecord(purchaseRecordDto));
+	}
+	
+	@PutMapping("/update-purchase-record/{purchasedItemId}")
+	public ResponseEntity<Map<Object, Object>> updatePurchaseRecord(@PathVariable(name = "purchasedItemId") Long purchasedItemId,@RequestBody @Valid PurchaseRecordDto purchaseRecordDto){
+		
+		return ResponseEntity.ok(this.purchaseRecordService.updatePurchaseRecord(purchasedItemId, purchaseRecordDto));
+	}
+
+	@DeleteMapping("/delete-purchase-record/{purchasedItemId}")
+	public ResponseEntity<Map<Object, Object>> deletePurchaseRecord(@PathVariable(name = "purchasedItemId") Long purchasedItemId){
+		
+		return ResponseEntity.ok(this.purchaseRecordService.deletePurchaseRecord(purchasedItemId));
+	}
+	
+	
+	
+	
+	
+	
 	
 }
