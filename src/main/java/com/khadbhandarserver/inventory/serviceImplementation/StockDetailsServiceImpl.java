@@ -88,6 +88,18 @@ public class StockDetailsServiceImpl implements StockDetailsService {
 		return stockDetailsMap;
 	}
 
+	@Override
+	public Map<Object, Object> getAllStockDetails() {
+		  Map<Object, Object> stockDetailsMap=new HashMap<>();
+			
+		  stockDetailsMap.put(AppConstant.statusCode, AppConstant.ok);
+		  stockDetailsMap.put(AppConstant.status, AppConstant.success);
+		  stockDetailsMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		  stockDetailsMap.put(AppConstant.response, this.stockDetailsRepository.findAll());
+			  
+			return stockDetailsMap;
+	}
+
 	
 
 

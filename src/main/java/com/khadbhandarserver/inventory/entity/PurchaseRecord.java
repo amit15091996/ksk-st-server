@@ -3,17 +3,21 @@ package com.khadbhandarserver.inventory.entity;
 import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
 import lombok.AllArgsConstructor;
@@ -51,5 +55,12 @@ public class PurchaseRecord {
 	private LocalDate purchaseDate;
 	@Column(length = 50,nullable = false)
 	private String purchasedFrom;
+	
+	@Column(nullable = false,columnDefinition = "boolean")
+	private boolean isPaymentDone;
+
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "purchaseRecord")
+	@JsonManagedReference
+	private PyamentsRecord pyamentsRecord;
 
 }

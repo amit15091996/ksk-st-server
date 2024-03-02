@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.khadbhandarserver.inventory.dto.InventoryItemDto;
 import com.khadbhandarserver.inventory.dto.LedgerDetailsDto;
 import com.khadbhandarserver.inventory.dto.PurchaseRecordDto;
+import com.khadbhandarserver.inventory.dto.PyamentsRecordDto;
+import com.khadbhandarserver.inventory.dto.RecieptsRecordDto;
 import com.khadbhandarserver.inventory.dto.SalesRecordDto;
 import com.khadbhandarserver.inventory.dto.StockDetailsDto;
 import com.khadbhandarserver.inventory.service.InventoryItemService;
@@ -21,6 +24,8 @@ import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
+import com.khadbhandarserver.inventory.service.PyamentsRecordService;
+import com.khadbhandarserver.inventory.service.RecieptRecordService;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +48,16 @@ public class InventoryController {
 	private SalesRecordService salesRecordService;
 	
 	@Autowired
+	private RecieptRecordService recieptRecordService;
+	
+	@Autowired
 	private PurchaseRecordService purchaseRecordService;
+	
+	@Autowired
+	private PyamentsRecordService pyamentsRecordService;
+	
+	
+	
 	
 	@PostMapping("/insert-ledger-details")
 	public ResponseEntity<Map<Object, Object>> saveLedgerDetails(@RequestBody @Valid LedgerDetailsDto ledgerDetailsDto){
@@ -63,6 +77,14 @@ public class InventoryController {
 		return ResponseEntity.ok(this.ledgerDetailsService.deleteLedgerDetails(ledgerId));
 	}
 	
+	
+	@GetMapping("/get-all-ledger-details")
+	public ResponseEntity<Map<Object, Object>> getAllLedgerDetailsRecord(){
+		
+		return ResponseEntity.ok(this.ledgerDetailsService.getAllLedgerDetails());
+	}
+	
+	
 	@PostMapping("/insert-stock-details")
 	public ResponseEntity<Map<Object, Object>> saveStockDetails(@RequestBody @Valid StockDetailsDto stockDetailsDto){
 		
@@ -79,6 +101,13 @@ public class InventoryController {
 	public ResponseEntity<Map<Object, Object>> deleteStockDetails(@PathVariable(name = "stockId") Long stockId){
 		
 		return ResponseEntity.ok(this.stockDetailsService.deleteStockDetails(stockId));
+	}
+	
+	
+	@GetMapping("/get-all-stock-details")
+	public ResponseEntity<Map<Object, Object>> getAllStockDetailsData(){
+		
+		return ResponseEntity.ok(this.stockDetailsService.getAllStockDetails());
 	}
 	
 	
@@ -102,6 +131,12 @@ public class InventoryController {
 		return ResponseEntity.ok(this.inventoryItemService.deleteInventoryItem(inventoryId));
 	}
 	
+	@GetMapping("/get-all-inventory-item")
+	public ResponseEntity<Map<Object, Object>> getAllInventoryItemRecord(){
+		
+		return ResponseEntity.ok(this.inventoryItemService.getAllInventoryItem());
+	}
+	
 	
 	
 	@PostMapping("/insert-sales-record")
@@ -120,6 +155,12 @@ public class InventoryController {
 	public ResponseEntity<Map<Object, Object>> deleteSalesRecord(@PathVariable(name = "soldItemId") Long soldItemId){
 		
 		return ResponseEntity.ok(this.salesRecordService.deleteSoldItem(soldItemId));
+	}
+	
+	@GetMapping("/get-all-sales-record")
+	public ResponseEntity<Map<Object, Object>> getAllSalesRecord(){
+		
+		return ResponseEntity.ok(this.salesRecordService.getAllSoldItem());
 	}
 	
 	
@@ -142,10 +183,62 @@ public class InventoryController {
 		return ResponseEntity.ok(this.purchaseRecordService.deletePurchaseRecord(purchasedItemId));
 	}
 	
+	@GetMapping("/get-all-purchase-record")
+	public ResponseEntity<Map<Object, Object>> getAllPurchaseRecordData(){
+		
+		return ResponseEntity.ok(this.purchaseRecordService.getAllPurchaseRecord());
+	}
 	
 	
 	
+	@PostMapping("/insert-reciept-record/{soldItemId}")
+	public ResponseEntity<Map<Object, Object>> saveRecieptRecord(@PathVariable("soldItemId")Long soldItemId ,@RequestBody @Valid RecieptsRecordDto recieptsRecordDto){
+		
+		return ResponseEntity.ok(this.recieptRecordService.insertRecieptRecord(soldItemId, recieptsRecordDto));
+	}
+	
+	@PutMapping("/update-reciept-record/{recieptId}")
+	public ResponseEntity<Map<Object, Object>> updateRecieptRecord(@PathVariable(name = "recieptId") Long recieptId,@RequestBody @Valid RecieptsRecordDto recieptsRecordDto){
+		
+		return ResponseEntity.ok(this.recieptRecordService.updateRecieptRecord(recieptId, recieptsRecordDto));
+	}
+
+	@DeleteMapping("/delete-reciept-record/{recieptId}")
+	public ResponseEntity<Map<Object, Object>> deleteRecieptRecord(@PathVariable(name = "recieptId") Long recieptId){
+		
+		return ResponseEntity.ok(this.recieptRecordService.deleteRecieptRecord(recieptId));
+	}
+	
+	@GetMapping("/get-all-reciept-record")
+	public ResponseEntity<Map<Object, Object>> getAllRecieptRecord(){
+		
+		return ResponseEntity.ok(this.recieptRecordService.getAllRecieptRecord());
+	}
 	
 	
+	
+	@PostMapping("/insert-payment-record/{purchasedItemId}")
+	public ResponseEntity<Map<Object, Object>> savePaymentRecord(@PathVariable("purchasedItemId")Long purchasedItemId ,@RequestBody @Valid PyamentsRecordDto pyamentsRecordDto){
+		
+		return ResponseEntity.ok(this.pyamentsRecordService.insertPaymentRecord(purchasedItemId, pyamentsRecordDto));
+	}
+	
+	@PutMapping("/update-payment-record/{paymentId}")
+	public ResponseEntity<Map<Object, Object>> updatePaymentRecord(@PathVariable(name = "paymentId") Long paymentId,@RequestBody @Valid PyamentsRecordDto pyamentsRecordDto){
+		
+		return ResponseEntity.ok(this.pyamentsRecordService.updatePaymentRecord(paymentId, pyamentsRecordDto));
+	}
+
+	@DeleteMapping("/delete-payment-record/{paymentId}")
+	public ResponseEntity<Map<Object, Object>> deletePaymentRecord(@PathVariable(name = "paymentId") Long paymentId){
+		
+		return ResponseEntity.ok(this.pyamentsRecordService.deletePaymentRecord(paymentId));
+	}
+	
+	@GetMapping("/get-all-payment-record")
+	public ResponseEntity<Map<Object, Object>> getAllPaymentRecordData(){
+		
+		return ResponseEntity.ok(this.pyamentsRecordService.getAllPaymentRecord());
+	}
 	
 }

@@ -9,6 +9,7 @@ public interface SalesRecordService {
 	Map<Object, Object> insertSoldItem(SalesRecordDto salesRecordDto);
 	Map<Object, Object> deleteSoldItem(Long soldItemId);
 	Map<Object, Object> updateSoldItem(Long soldItemId,SalesRecordDto salesRecordDto);
+	Map<Object, Object> getAllSoldItem();
 	
 	
 }
