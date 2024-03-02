@@ -35,4 +35,12 @@ public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, 
 			@Param("purchasedFrom")String purchasedFrom,
 			@Param("purchasedItemId") Long purchasedItemId
 			);
+	
+	
+	@Modifying(flushAutomatically = true,clearAutomatically = true)
+	@Query("UPDATE PurchaseRecord pr  SET pr.isPaymentDone=:isPaymentDone WHERE pr.purchasedItemId=:purchasedItemId")
+	public void updateIsPaymentDoneColumn(
+			@Param("isPaymentDone") boolean isPaymentDone,
+			@Param("purchasedItemId") Long purchasedItemId
+			);
 }

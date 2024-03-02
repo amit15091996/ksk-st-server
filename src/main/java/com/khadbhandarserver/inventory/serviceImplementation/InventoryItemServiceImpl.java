@@ -95,4 +95,17 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 		return inventoryItemMap;
 	}
 
+	@Override
+	public Map<Object, Object> getAllInventoryItem() {
+		
+		  Map<Object, Object> inventoryItemMap=new HashMap<>();
+		
+		 inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
+		inventoryItemMap.put(AppConstant.status, AppConstant.success);
+		inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		inventoryItemMap.put(AppConstant.response, this.inventoryItemRepository.findAll());
+		  
+		return inventoryItemMap;
+	}
+
 }

@@ -103,4 +103,16 @@ public class LedgerDetailsServiceImpl implements LedgerDetailsService {
 	return responseMap;
 	}
 
+	@Override
+	public Map<Object, Object> getAllLedgerDetails() {
+		  Map<Object, Object> responseMap=new HashMap<>();
+			
+		  responseMap.put(AppConstant.statusCode, AppConstant.ok);
+		  responseMap.put(AppConstant.status, AppConstant.success);
+		  responseMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		  responseMap.put(AppConstant.response, this.ledgerDetailsRepository.findAll());
+			  
+			return responseMap;
+	}
+
 }

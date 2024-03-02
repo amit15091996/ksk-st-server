@@ -30,4 +30,11 @@ public interface SalesRecordRepository extends JpaRepository<SalesRecords, Long>
 			);
 	
 	
+	@Modifying(flushAutomatically = true,clearAutomatically = true)
+	@Query("UPDATE SalesRecords srr  SET srr.isRecieptGenerated=:isRecieptGenerated WHERE srr.soldItemId=:soldItemId")
+	public void updateSalesRecordRecieptGenerationColumn(
+			@Param("isRecieptGenerated") boolean isRecieptGenerated,
+			@Param("soldItemId") Long soldItemId
+			);
+	
 }

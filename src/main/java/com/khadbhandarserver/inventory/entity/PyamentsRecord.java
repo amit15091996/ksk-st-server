@@ -2,15 +2,14 @@ package com.khadbhandarserver.inventory.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -29,36 +28,31 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "SALES_RECORD")
+@Table(name = "PAYMENTS_RECORD")
 @Entity
-public class SalesRecords {
+public class PyamentsRecord {
 
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "sale_record_sequence")
+	@TableGenerator(allocationSize = 1,initialValue = 0,name = "payment_details_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="sale_record_sequence" )
-	private Long soldItemId;
+	@GeneratedValue(strategy = GenerationType.TABLE,generator ="payment_details_sequence" )
+	private long paymentId;
 	@Column(length = 50,nullable = false)
-	private String soldItemName;
-	@Column(length = 50,nullable = false)
-	private String soldItemCategory;
-	@Column(nullable = false)
-	private int soldItemQuantity;
-	@Column(length = 20,nullable = false)
-	private String soldItemUnit;
-	@Column(nullable = false)
-	private double soldItemPrice;
-	@Column( columnDefinition="Decimal(20,3)")
-	private double soldItemTotalAmount;
+	private String payeeName;
 	@Column(nullable = false)
 	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
-	private LocalDate sellDate;
-	@Column(nullable = false,columnDefinition = "boolean")
-	private boolean isRecieptGenerated;
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
-	@JsonManagedReference
-	private RecieptsRecord recieptsRecord;
-	
+	private LocalDate paymentDate;
+	@Column(nullable = false)
+	private double paymentAmountPerUnit;
+	@Column(length = 20,nullable = false)
+	private String paidProductGroup;
+	@Column(nullable = false)
+	private int paidProductQuantity;
+	@Column( columnDefinition="Decimal(20,3)")
+	private double TotalPaidAmount;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JsonBackReference
+	private PurchaseRecord purchaseRecord;
 	
 }

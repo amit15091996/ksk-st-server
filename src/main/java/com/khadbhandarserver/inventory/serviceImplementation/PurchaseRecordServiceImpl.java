@@ -94,4 +94,16 @@ public class PurchaseRecordServiceImpl implements PurchaseRecordService {
 		return purchaseRecordMap;
 	}
 
+	@Override
+	public Map<Object, Object> getAllPurchaseRecord() {
+		  Map<Object, Object> purchaseRecordMap=new HashMap<>();
+			
+		  purchaseRecordMap.put(AppConstant.statusCode, AppConstant.ok);
+		  purchaseRecordMap.put(AppConstant.status, AppConstant.success);
+		  purchaseRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		  purchaseRecordMap.put(AppConstant.response, this.purchaseRecordRepository.findAll());
+			  
+			return purchaseRecordMap;
+	}
+
 }

@@ -92,4 +92,16 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 		return salesRecordMap;
 	}
 
+	@Override
+	public Map<Object, Object> getAllSoldItem() {
+		  Map<Object, Object> salesRecordMap=new HashMap<>();
+			
+		  salesRecordMap.put(AppConstant.statusCode, AppConstant.ok);
+		  salesRecordMap.put(AppConstant.status, AppConstant.success);
+		  salesRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		  salesRecordMap.put(AppConstant.response, this.salesRecordRepository.findAll());
+			  
+			return salesRecordMap;
+	}
+
 }
