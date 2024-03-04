@@ -21,6 +21,7 @@ import com.khadbhandarserver.inventory.dto.SalesRecordDto;
 import com.khadbhandarserver.inventory.dto.StockDetailsDto;
 import com.khadbhandarserver.inventory.service.InventoryItemService;
 import com.khadbhandarserver.inventory.service.LedgerDetailsService;
+import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
@@ -56,6 +57,8 @@ public class InventoryController {
 	@Autowired
 	private PyamentsRecordService pyamentsRecordService;
 	
+	@Autowired
+	private ProductCategoryService productCategoryService;
 	
 	
 	
@@ -240,5 +243,19 @@ public class InventoryController {
 		
 		return ResponseEntity.ok(this.pyamentsRecordService.getAllPaymentRecord());
 	}
+	
+	@GetMapping("/get-product-via-category/{categoryName}")
+	public ResponseEntity<Map<Object, Object>> getDataViaCategory(@PathVariable("categoryName") String CategoryName ){
+		
+		return ResponseEntity.ok(this.productCategoryService.getCategoryWiseData(CategoryName));
+	}
+	
+	@GetMapping("/get-all-category")
+	public ResponseEntity<Map<Object, Object>> getAllCategory(@PathVariable("categoryName") String CategoryName ){
+		
+		return ResponseEntity.ok(this.productCategoryService.getAllCategory());
+	}
+	
+	
 	
 }

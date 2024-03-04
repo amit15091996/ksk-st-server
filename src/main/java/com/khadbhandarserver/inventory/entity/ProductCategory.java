@@ -33,24 +33,24 @@ public class ProductCategory {
 	@GeneratedValue(strategy = GenerationType.TABLE,generator ="category_details_sequence" )
 	private long categoryId;
 	@Column(length = 50,nullable = false)
-	private String CategoryName;
+	private String categoryName;
 	@Column(length = 50,nullable = false)
 	private String categoryDesc;
 	
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "inventoryItemCategory",referencedColumnName = "CategoryName")
+	@JoinColumn(name = "inventoryItemCategory",referencedColumnName = "categoryName")
 	private List<InventoryItem> inventoryItem;
 	
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "stockCategory",referencedColumnName = "CategoryName")
+	@JoinColumn(name = "stockCategory",referencedColumnName = "categoryName")
 	private List<StockDetails> stockDetails;
 	
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "soldItemCategory",referencedColumnName = "CategoryName")
+	@JoinColumn(name = "soldItemCategory",referencedColumnName = "categoryName")
 	private List<SalesRecords> salesRecords;
 	
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "purchasedItemCategory",referencedColumnName = "CategoryName")
+	@JoinColumn(name = "purchasedItemCategory",referencedColumnName = "categoryName")
 	private List<PurchaseRecord> purchaseRecord;
 
 }

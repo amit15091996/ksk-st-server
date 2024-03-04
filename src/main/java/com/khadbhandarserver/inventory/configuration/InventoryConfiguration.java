@@ -2,25 +2,31 @@ package com.khadbhandarserver.inventory.configuration;
 
 import java.util.Arrays;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 public class InventoryConfiguration {
 
-	
 	  @Bean
-	  public CorsConfigurationSource corsConfigurationSource() {
-		CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("*")); // Allow requests from all origins
-		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE","OPTIONS")); // Allowed HTTP methods
-		configuration.setAllowedHeaders(Arrays.asList("*")); // Allowed
-		configuration.setAllowCredentials(true);
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		source.registerCorsConfiguration("/**", configuration); // Apply the configuration to all paths
-		return source;
-	}
+	    public FilterRegistrationBean corsFilter() {
+	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+	        CorsConfiguration config = new CorsConfiguration();
+	        config.setAllowedOrigins(Arrays.asList("*"));
+	        config.setAllowedMethods(Arrays.asList("POST", "OPTIONS", "GET", "DELETE", "PUT"));
+	        config.setAllowedHeaders(Arrays.asList("X-Requested-With", "Origin", "Content-Type", "Accept", "Authorization"));
+	        source.registerCorsConfiguration("/**", config);
+	        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
+	        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+	        return bean;
+	    }
+	
+	
 }
