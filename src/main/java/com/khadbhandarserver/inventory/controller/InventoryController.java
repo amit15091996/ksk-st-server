@@ -251,7 +251,7 @@ public class InventoryController {
 	}
 	
 	@GetMapping("/get-all-category")
-	public ResponseEntity<Map<Object, Object>> getAllCategory(@PathVariable("categoryName") String CategoryName ){
+	public ResponseEntity<Map<Object, Object>> getAllCategory(){
 		
 		return ResponseEntity.ok(this.productCategoryService.getAllCategory());
 	}

@@ -18,6 +18,7 @@ public class AppConstant {
 	public static final String recordUpdatedSuccessFully="Record updated Successfully with Id ";
 	public static final String requestBodyMissing="Required Request Body Is Missing ";
 	public static final String dataFetchedSuccesfully="Data fetched Successfully !!";
+	public static final String error="error";
 	
 
 
