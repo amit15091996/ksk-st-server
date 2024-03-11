@@ -1,6 +1,8 @@
 package com.khadbhandarserver.inventory.serviceImplementation;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,22 +22,25 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 	private SalesRecordRepository salesRecordRepository;
 	
 	@Override
-	public Map<Object, Object> insertSoldItem(SalesRecordDto salesRecordDto) {
+	public Map<Object, Object> insertSoldItem( List<SalesRecordDto> salesRecordDto) {
 		  Map<Object, Object> salesRecordMap=new HashMap<>();
-			
-		  SalesRecords salesRecords=new SalesRecords();
-		  salesRecords.setSellDate(salesRecordDto.getSellDate());
-		  salesRecords.setSoldItemCategory(salesRecordDto.getSoldItemCategory());
-		  salesRecords.setSoldItemName(salesRecordDto.getSoldItemName());
-		  salesRecords.setSoldItemUnit(salesRecordDto.getSoldItemUnit());
-		  salesRecords.setSoldItemPrice(salesRecordDto.getSoldItemPrice());
-		  salesRecords.setSoldItemQuantity(salesRecordDto.getSoldItemQuantity());
-		  salesRecords.setSoldItemTotalAmount(salesRecordDto.getSoldItemPrice()*salesRecordDto.getSoldItemQuantity());
-	        
-			
+	      List<SalesRecords> bulkRecord=new ArrayList<>();
+		 
+	      for(SalesRecordDto sr:salesRecordDto) {
+	    	  SalesRecords salesRecords=new SalesRecords();
+			  salesRecords.setSellDate(sr.getSellDate());
+			  salesRecords.setSoldItemCategory(sr.getSoldItemCategory());
+			  salesRecords.setSoldItemName(sr.getSoldItemName());
+			  salesRecords.setPartyName(sr.getPartyName());
+			  salesRecords.setSoldItemPrice(sr.getSoldItemPrice());
+			  salesRecords.setSoldItemQuantity(sr.getSoldItemQuantity());
+			  salesRecords.setSoldItemTotalAmount(sr.getSoldItemPrice()*sr.getSoldItemQuantity());
+			  bulkRecord.add(salesRecords);
+	      }
+		  
 			try {
-				SalesRecords salesRecordsSaved=this.salesRecordRepository.save(salesRecords);
-			if( salesRecordsSaved !=null) {
+				List<SalesRecords> salesRecordsSaved=this.salesRecordRepository.saveAll(bulkRecord);
+			if( !salesRecordsSaved.isEmpty()) {
 				salesRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 				salesRecordMap.put(AppConstant.status, AppConstant.success);
 				salesRecordMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
@@ -74,7 +79,7 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 						salesRecordDto.getSoldItemName(),
 						salesRecordDto.getSoldItemCategory(),
 						salesRecordDto.getSoldItemQuantity(),
-						salesRecordDto.getSoldItemUnit(),
+						salesRecordDto.getPartyName(),
 						salesRecordDto.getSoldItemPrice(),
 						salesRecordDto.getSoldItemPrice()*salesRecordDto.getSoldItemQuantity(),
 						salesRecordDto.getSellDate(),
