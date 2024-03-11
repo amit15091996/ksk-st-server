@@ -43,8 +43,8 @@ public class SalesRecords {
 	private String soldItemCategory;
 	@Column(nullable = false)
 	private int soldItemQuantity;
-	@Column(length = 20,nullable = false)
-	private String soldItemUnit;
+	@Column(length = 50,nullable = false)
+	private String partyName;
 	@Column(nullable = false)
 	private double soldItemPrice;
 	@Column( columnDefinition="Decimal(20,3)")

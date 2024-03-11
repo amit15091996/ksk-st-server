@@ -21,8 +21,8 @@ public class SalesRecordDto {
 	private String soldItemCategory;
 	@NotNull(message = "Please enter sold Item quantity(Mandatory)")
 	private int soldItemQuantity;
-	@NotBlank(message = "Please enter sold Item unit(Mandatory)")
-	private String soldItemUnit;
+	@NotBlank(message = "Please enter party name(sold to)(Mandatory)")
+	private String partyName;
 	@NotNull(message = "Please enter sold Item price(Mandatory)")
 	private double soldItemPrice;
 	@NotNull(message = "Please enter item sell date(Mandatory)")

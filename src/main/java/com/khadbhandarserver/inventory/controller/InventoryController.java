@@ -1,5 +1,6 @@
 package com.khadbhandarserver.inventory.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -143,7 +144,7 @@ public class InventoryController {
 	
 	
 	@PostMapping("/insert-sales-record")
-	public ResponseEntity<Map<Object, Object>> saveSalesRecord(@RequestBody @Valid SalesRecordDto salesRecordDto){
+	public ResponseEntity<Map<Object, Object>> saveSalesRecord(@RequestBody @Valid  List<SalesRecordDto>salesRecordDto){
 		
 		return ResponseEntity.ok(this.salesRecordService.insertSoldItem(salesRecordDto));
 	}
