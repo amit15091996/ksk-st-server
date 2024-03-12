@@ -16,19 +16,19 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface SalesRecordRepository extends JpaRepository<SalesRecords, Long> {
 
-	@Modifying(flushAutomatically = true,clearAutomatically = true)
-	@Query("UPDATE SalesRecords sr  SET sr.soldItemName=:soldItemName,sr.soldItemCategory=:soldItemCategory,sr.soldItemQuantity=:soldItemQuantity,sr.partyName=:partyName,sr.soldItemPrice=:soldItemPrice,sr.soldItemTotalAmount=:soldItemTotalAmount,sr.sellDate=:sellDate WHERE sr.soldItemId=:soldItemId")
-	public void updateSalesRecord(
-			@Param("soldItemName") String soldItemName,
-			@Param("soldItemCategory") String soldItemCategory,
-			@Param("soldItemQuantity") int soldItemQuantity,
-			@Param("partyName") String partyName,
-			@Param("soldItemPrice") double soldItemPrice,
-			@Param("soldItemTotalAmount") double soldItemTotalAmount,
-			@Param("sellDate")LocalDate sellDate,
-			@Param("soldItemId") Long soldItemId
-			);
-	
+//	@Modifying(flushAutomatically = true,clearAutomatically = true)
+//	@Query("UPDATE SalesRecords sr  SET sr.soldItemName=:soldItemName,sr.soldItemCategory=:soldItemCategory,sr.soldItemQuantity=:soldItemQuantity,sr.partyName=:partyName,sr.soldItemPrice=:soldItemPrice,sr.soldItemTotalAmount=:soldItemTotalAmount,sr.sellDate=:sellDate WHERE sr.soldItemId=:soldItemId")
+//	public void updateSalesRecord(
+//			@Param("soldItemName") String soldItemName,
+//			@Param("soldItemCategory") String soldItemCategory,
+//			@Param("soldItemQuantity") int soldItemQuantity,
+//			@Param("partyName") String partyName,
+//			@Param("soldItemPrice") double soldItemPrice,
+//			@Param("soldItemTotalAmount") double soldItemTotalAmount,
+//			@Param("sellDate")LocalDate sellDate,
+//			@Param("soldItemId") Long soldItemId
+//			);
+//	
 	
 	@Modifying(flushAutomatically = true,clearAutomatically = true)
 	@Query("UPDATE SalesRecords srr  SET srr.isRecieptGenerated=:isRecieptGenerated WHERE srr.soldItemId=:soldItemId")

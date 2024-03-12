@@ -44,10 +44,10 @@ public class ProductCategory {
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
 	@JoinColumn(name = "stockCategory",referencedColumnName = "categoryName")
 	private List<StockDetails> stockDetails;
-	
-	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
-	@JoinColumn(name = "soldItemCategory",referencedColumnName = "categoryName")
-	private List<SalesRecords> salesRecords;
+//	
+//	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
+//	@JoinColumn(name = "soldItemCategory",referencedColumnName = "categoryName")
+//	private List<SalesRecords> salesRecords;
 	
 	@OneToMany(fetch = FetchType.LAZY,orphanRemoval = true)
 	@JoinColumn(name = "purchasedItemCategory",referencedColumnName = "categoryName")

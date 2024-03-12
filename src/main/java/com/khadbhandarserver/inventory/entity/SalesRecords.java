@@ -37,23 +37,8 @@ public class SalesRecords {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE,generator ="sale_record_sequence" )
 	private Long soldItemId;
-	@Column(length = 50,nullable = false)
-	private String soldItemName;
-	@Column(length = 50,nullable = false)
-	private String soldItemCategory;
-	@Column(nullable = false)
-	private int soldItemQuantity;
-	@Column(length = 50,nullable = false)
-	private String partyName;
-	@Column(nullable = false)
-	private double soldItemPrice;
-	@Column( columnDefinition="Decimal(20,3)")
-	private double soldItemTotalAmount;
-	@Column(nullable = false)
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
-	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	private LocalDate sellDate;
+	@Column(columnDefinition="LONGTEXT",nullable = false)
+	private String soldItemList;
 	@Column(nullable = false,columnDefinition = "boolean")
 	private boolean isRecieptGenerated;
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
