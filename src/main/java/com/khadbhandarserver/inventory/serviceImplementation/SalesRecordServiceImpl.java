@@ -4,6 +4,7 @@ package com.khadbhandarserver.inventory.serviceImplementation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,49 +46,35 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 	      SalesRecords salesRecords=new SalesRecords();
 		  salesRecords.setSoldItemList(this.objectMapper.writeValueAsString(salesRecordDto));
 		  
-	List<UpdatedSalesRecord> updateRecord=salesRecordDto.stream().map(item->{
-			UpdatedSalesRecord updatedSalesRecord=new UpdatedSalesRecord();
+	       List<UpdatedSalesRecord> updateRecord=salesRecordDto.stream().map(item->{
 			List<StockDetails> stockDetails=this.stockDetailsRepository.findByStockName(item.getSoldItemName());
-			
 			if( stockDetails.stream().findFirst().isPresent()) {
-				updatedSalesRecord.setUpdatedMap( this.salesUtil.stockRecordUpdate(salesRecordDto, stockDetails.stream().findFirst().get()));	
+			 return	this.salesUtil.stockRecordUpdate(salesRecordDto, stockDetails.stream().findFirst().get());
 			 
 			}
 			else {
 				throw new NotFoundException("Item Not Found With Name "+item.getSoldItemName());
 			}
-			return updatedSalesRecord;
 		}).collect(Collectors.toList());
 		  
-	
-	
-//	updateRecord.stream().map(item->item.getUpdatedMap().get("requestedQuantity")).reduce(0,(totalquantity,quantity)->totalquantity+quantity);
-	
-		salesRecordDto.forEach(item->{
-		List<StockDetails> stockDetails=this.stockDetailsRepository.findByStockName(item.getSoldItemName());
-		
-		if(stockDetails.stream().findFirst().isPresent()) {
-			int requestedQuantity=salesRecordDto.stream().filter(filterlist->filterlist.getSoldItemName().equalsIgnoreCase(stockDetails.stream().findFirst().get().getStockName())).map(quantity->quantity.getSoldItemQuantity()).reduce(0,(totalquantity,quantity)->totalquantity+quantity);
-			if(stockDetails.stream().findFirst().get().getStockQuantity()>requestedQuantity	) {
 
-				  this.stockDetailsRepository.updateStockDetalsOnSales( stockDetails.stream().findFirst().get().getStockQuantity()-item.getSoldItemQuantity(),
-						  (stockDetails.stream().findFirst().get().getStockQuantity()-item.getSoldItemQuantity())* stockDetails.stream().findFirst().get().getStockPrice(),
-						  stockDetails.stream().findFirst().get().getStockId());
-			    }
-			
-			else {
-				throw new BadRequest("Requested item quantity is greater then available quantity  "+"Requested Quantity:- "+requestedQuantity+"  Available Quantity:- " + stockDetails.stream().findFirst().get().getStockQuantity() );
-			}
-			}
-			
-			
+	   
+	if(updateRecord.stream().distinct().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)< 
+	      updateRecord.stream().distinct().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity)
+			) {
 		
-		else {
-			throw new NotFoundException("Item Not Found With Name "+item.getSoldItemName());
-		}
-		 
-		  });
+		updateRecord.stream().distinct().forEach(k->{
+			 this.stockDetailsRepository.updateStockDetalsOnSales( k.getStockDetails().getStockQuantity()-k.getTotalQuantity(),
+					  (k.getStockDetails().getStockQuantity()-k.getTotalQuantity())* k.getStockDetails().getStockPrice(),
+					  k.getStockDetails().getStockId());
+		});
+	}
+	
+	else {
 		
+		throw new BadRequest("Total Requested item quantity is greater then available quantity  "+"Requested Quantity:- "+updateRecord.stream().distinct().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)+"  Available Quantity:- " + updateRecord.stream().distinct().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity));
+	}
+	       
 		
 		  
 			try {
