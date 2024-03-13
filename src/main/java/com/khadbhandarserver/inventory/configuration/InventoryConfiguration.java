@@ -12,6 +12,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 @Configuration
 public class InventoryConfiguration {
 
@@ -27,6 +29,10 @@ public class InventoryConfiguration {
 	        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 	        return bean;
 	    }
+	  
+	
+	  
+	
 	
 	
 }

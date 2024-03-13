@@ -25,7 +25,7 @@ public class StockDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE,generator ="stock_details_sequence" )
 	private Long stockId;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50,nullable = false,unique = true)
 	private String stockName;
 	@Column(length = 50,nullable = false)
 	private String stockCategory;

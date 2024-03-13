@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.khadbhandarserver.inventory.dto.InventoryItemDto;
 import com.khadbhandarserver.inventory.dto.LedgerDetailsDto;
 import com.khadbhandarserver.inventory.dto.PurchaseRecordDto;
@@ -25,6 +28,7 @@ import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
+import com.khadbhandarserver.inventory.serviceImplementation.SalesRecordServiceImpl;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
 import com.khadbhandarserver.inventory.service.PyamentsRecordService;
 import com.khadbhandarserver.inventory.service.RecieptRecordService;
@@ -36,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("khad/bhandar/inventory")
 public class InventoryController {
+	
 	
 	@Autowired
 	private LedgerDetailsService ledgerDetailsService;
@@ -65,6 +70,8 @@ public class InventoryController {
 	
 	@PostMapping("/insert-ledger-details")
 	public ResponseEntity<Map<Object, Object>> saveLedgerDetails(@RequestBody @Valid LedgerDetailsDto ledgerDetailsDto){
+		
+		
 		
 		return ResponseEntity.ok(this.ledgerDetailsService.ledgerDetails(ledgerDetailsDto));
 	}
@@ -144,7 +151,7 @@ public class InventoryController {
 	
 	
 	@PostMapping("/insert-sales-record")
-	public ResponseEntity<Map<Object, Object>> saveSalesRecord(@RequestBody @Valid  List<SalesRecordDto>salesRecordDto){
+	public ResponseEntity<Map<Object, Object>> saveSalesRecord(@RequestBody @Valid  List<SalesRecordDto>salesRecordDto) throws JsonProcessingException{
 		
 		return ResponseEntity.ok(this.salesRecordService.insertSoldItem(salesRecordDto));
 	}
@@ -162,7 +169,7 @@ public class InventoryController {
 	}
 	
 	@GetMapping("/get-all-sales-record")
-	public ResponseEntity<Map<Object, Object>> getAllSalesRecord(){
+	public ResponseEntity<Map<Object, Object>> getAllSalesRecord() throws JsonMappingException, JsonProcessingException{
 		
 		return ResponseEntity.ok(this.salesRecordService.getAllSoldItem());
 	}
@@ -256,6 +263,14 @@ public class InventoryController {
 		
 		return ResponseEntity.ok(this.productCategoryService.getAllCategory());
 	}
+	
+	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
+	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
+		
+		log.info(partyName);
+		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));
+	}
+	
 	
 	
 	
