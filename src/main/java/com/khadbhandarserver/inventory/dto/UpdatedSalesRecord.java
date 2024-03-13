@@ -19,5 +19,6 @@ public class UpdatedSalesRecord {
 	
 	private int totalQuantity;
 	private StockDetails stockDetails;
+	
   
 }

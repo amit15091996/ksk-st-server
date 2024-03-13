@@ -28,6 +28,7 @@ import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
+import com.khadbhandarserver.inventory.serviceImplementation.SalesRecordServiceImpl;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
 import com.khadbhandarserver.inventory.service.PyamentsRecordService;
 import com.khadbhandarserver.inventory.service.RecieptRecordService;
@@ -39,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RequestMapping("khad/bhandar/inventory")
 public class InventoryController {
+	
 	
 	@Autowired
 	private LedgerDetailsService ledgerDetailsService;
@@ -68,6 +70,8 @@ public class InventoryController {
 	
 	@PostMapping("/insert-ledger-details")
 	public ResponseEntity<Map<Object, Object>> saveLedgerDetails(@RequestBody @Valid LedgerDetailsDto ledgerDetailsDto){
+		
+		
 		
 		return ResponseEntity.ok(this.ledgerDetailsService.ledgerDetails(ledgerDetailsDto));
 	}
@@ -259,6 +263,14 @@ public class InventoryController {
 		
 		return ResponseEntity.ok(this.productCategoryService.getAllCategory());
 	}
+	
+	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
+	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
+		
+		log.info(partyName);
+		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));
+	}
+	
 	
 	
 	

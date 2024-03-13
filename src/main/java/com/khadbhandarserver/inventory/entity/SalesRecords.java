@@ -44,6 +44,11 @@ public class SalesRecords {
 	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
 	@JsonManagedReference
 	private RecieptsRecord recieptsRecord;
-	
+	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate sellDate;
+	@Column(length = 50,nullable = false)
+	private String partyName;
 	
 }

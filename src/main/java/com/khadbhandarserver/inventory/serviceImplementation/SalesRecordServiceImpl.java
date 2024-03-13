@@ -1,17 +1,18 @@
 package com.khadbhandarserver.inventory.serviceImplementation;
 
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.eclipse.collections.impl.utility.ListIterate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.khadbhandarserver.inventory.dto.AllSalesRecordDto;
 import com.khadbhandarserver.inventory.dto.SalesRecordDto;
@@ -26,7 +27,10 @@ import com.khadbhandarserver.inventory.repository.StockDetailsRepository;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.util.SalesUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class SalesRecordServiceImpl implements SalesRecordService {
 
 	@Autowired
@@ -42,9 +46,12 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 	
 	@Override
 	public Map<Object, Object> insertSoldItem( List<SalesRecordDto> salesRecordDto) throws JsonProcessingException {
-		  Map<Object, Object> salesRecordMap=new HashMap<>();
+		  
+		Map<Object, Object> salesRecordMap=new HashMap<>();
 	      SalesRecords salesRecords=new SalesRecords();
 		  salesRecords.setSoldItemList(this.objectMapper.writeValueAsString(salesRecordDto));
+		  salesRecords.setPartyName(salesRecordDto.size()>0?salesRecordDto.get(0).getPartyName():"");
+		  salesRecords.setSellDate(salesRecordDto.size()>0?salesRecordDto.get(0).getSellDate():LocalDate.now());
 		  
 	       List<UpdatedSalesRecord> updateRecord=salesRecordDto.stream().map(item->{
 			List<StockDetails> stockDetails=this.stockDetailsRepository.findByStockName(item.getSoldItemName());
@@ -58,21 +65,38 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 		}).collect(Collectors.toList());
 		  
 
-	   
-	if(updateRecord.stream().distinct().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)< 
-	      updateRecord.stream().distinct().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity)
+	      
+	    
+	       
+	if(ListIterate.distinctBy(updateRecord, (i)->i.getStockDetails().getStockName()).stream().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)<= 
+			ListIterate.distinctBy(updateRecord, (i)->i.getStockDetails().getStockName()).stream().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity)
 			) {
 		
-		updateRecord.stream().distinct().forEach(k->{
-			 this.stockDetailsRepository.updateStockDetalsOnSales( k.getStockDetails().getStockQuantity()-k.getTotalQuantity(),
-					  (k.getStockDetails().getStockQuantity()-k.getTotalQuantity())* k.getStockDetails().getStockPrice(),
-					  k.getStockDetails().getStockId());
-		});
+		
+		if(ListIterate.distinctBy(updateRecord, (i)-> i.getStockDetails().getStockName()).stream().map(item->item.getTotalQuantity()<=item.getStockDetails().getStockQuantity()).allMatch(k->k==true)) {
+			
+			
+			ListIterate.distinctBy(updateRecord, (i)->i.getStockDetails().getStockName()).forEach(k->{
+				
+				 this.stockDetailsRepository.updateStockDetalsOnSales( k.getStockDetails().getStockQuantity()-k.getTotalQuantity(),
+						  (k.getStockDetails().getStockQuantity()-k.getTotalQuantity())* k.getStockDetails().getStockPrice(),
+						  k.getStockDetails().getStockId());
+				
+				
+			});
+		}
+		else {
+			throw new BadRequest("Some of the item quantity you requested not avialable with us right now ");
+		}
+		
+		
 	}
 	
 	else {
 		
-		throw new BadRequest("Total Requested item quantity is greater then available quantity  "+"Requested Quantity:- "+updateRecord.stream().distinct().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)+"  Available Quantity:- " + updateRecord.stream().distinct().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity));
+		throw new BadRequest("Total Requested item quantity is greater then available quantity  "+" Total Requested Quantity:- "
+				+ ""+ListIterate.distinctBy(updateRecord, (i)->i.getStockDetails().getStockName()).stream().map(item->item.getTotalQuantity()).reduce(0,(total,quantity)->total+quantity)+""
+						+ ", Total  Available Quantity:- " +ListIterate.distinctBy(updateRecord, (i)->i.getStockDetails().getStockName()).stream().map(item->item.getStockDetails().getStockQuantity()).reduce(0,(total,quantity)->total+quantity));
 	}
 	       
 		
@@ -149,16 +173,48 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 						allSalesRecord.setRecieptGenerated(item.isRecieptGenerated());
 						allSalesRecord.setRecieptsRecord(item.getRecieptsRecord());
 						allSalesRecord.setSoldItemId(item.getSoldItemId());
+						allSalesRecord.setPartyName(item.getPartyName());
+						allSalesRecord.setSellDate(item.getSellDate());
 						try {
 							allSalesRecord.setSalesList(this.objectMapper.readValue(item.getSoldItemList(), this.objectMapper.getTypeFactory().constructCollectionType(List.class, SalesRecordDto.class)));
 						} catch (JsonProcessingException e) {
-							e.printStackTrace();
+							log.info(e.getMessage());
 						}
 						
 				  return allSalesRecord;
 			  }).collect(Collectors.toList()));
 			  
 			return salesRecordMap;
+	}
+
+	@Override
+	public Map<Object, Object> getSoldItemByPartyName(String partyName)
+			throws JsonMappingException, JsonProcessingException {
+
+
+		 Map<Object, Object> salesRecordMap=new HashMap<>();
+			List<SalesRecords> salesRecord=this.salesRecordRepository.findByPartyName(partyName);
+	  
+			  salesRecordMap.put(AppConstant.statusCode, AppConstant.ok);
+			  salesRecordMap.put(AppConstant.status, AppConstant.success);
+			  salesRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+			  salesRecordMap.put(AppConstant.response, salesRecord.stream().map(item->{
+		        	        AllSalesRecordDto allSalesRecord=new AllSalesRecordDto();
+							allSalesRecord.setRecieptGenerated(item.isRecieptGenerated());
+							allSalesRecord.setRecieptsRecord(item.getRecieptsRecord());
+							allSalesRecord.setSoldItemId(item.getSoldItemId());
+							allSalesRecord.setPartyName(item.getPartyName());
+							allSalesRecord.setSellDate(item.getSellDate());
+							try {
+								allSalesRecord.setSalesList(this.objectMapper.readValue(item.getSoldItemList(), this.objectMapper.getTypeFactory().constructCollectionType(List.class, SalesRecordDto.class)));
+							} catch (JsonProcessingException e) {
+								log.info(e.getMessage());
+							}
+							
+					  return allSalesRecord;
+				  }).collect(Collectors.toList()));
+				  
+				return salesRecordMap;
 	}
 
 }
