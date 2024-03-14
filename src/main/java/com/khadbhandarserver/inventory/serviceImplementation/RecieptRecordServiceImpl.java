@@ -1,5 +1,6 @@
 package com.khadbhandarserver.inventory.serviceImplementation;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import com.khadbhandarserver.inventory.helper.AppConstant;
 import com.khadbhandarserver.inventory.repository.SalesRecordRepository;
 import com.khadbhandarserver.inventory.repository.RecieptsRecordRepository;
 import com.khadbhandarserver.inventory.service.RecieptRecordService;
+import com.khadbhandarserver.inventory.util.InvoiceGenerator;
 
 @Service
 public class RecieptRecordServiceImpl implements RecieptRecordService {
@@ -25,6 +27,9 @@ public class RecieptRecordServiceImpl implements RecieptRecordService {
 	
 	@Autowired
 	private RecieptsRecordRepository RecieptsRecordRepository;
+	
+	@Autowired
+	private InvoiceGenerator invoiceGenerator;
 	
 
 	@Override
@@ -43,6 +48,7 @@ public class RecieptRecordServiceImpl implements RecieptRecordService {
 			  recieptsRecord.setRecieptPaymentMode(recieptsRecordDto.getRecieptPaymentMode());
 			  recieptsRecord.setRecipientAddress(recieptsRecordDto.getRecipientAddress());
 			  recieptsRecord.setRecipientMobileNumber(recieptsRecordDto.getRecipientMobileNumber());
+			  recieptsRecord.setInvoiceNumber(this.invoiceGenerator.InvoiceNumber(LocalDateTime.now()));
 			  recieptsRecord.setSalesRecords(salesRecords.get());	        
 			
 			try {
