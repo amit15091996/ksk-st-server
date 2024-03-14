@@ -39,7 +39,7 @@ public class InventoryItem {
 	private String inventoryItemUnit;
 	@Column(nullable = false)
 	private double inventoryItemPrice;
-	@Column( columnDefinition="Decimal(20,3)")
+	@Column( columnDefinition="Decimal(20,2)")
 	private double inventoryItemTotalAmount;
 	
 	

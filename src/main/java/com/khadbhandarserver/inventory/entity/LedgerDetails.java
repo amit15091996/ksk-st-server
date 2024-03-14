@@ -25,7 +25,7 @@ public class LedgerDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE,generator ="ledger_details_sequence" )
 	private long ledgerId;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50,nullable = false,unique = true)
 	private String customerName;
 	@Column(length = 50,nullable = false)
 	private String fatherName;
