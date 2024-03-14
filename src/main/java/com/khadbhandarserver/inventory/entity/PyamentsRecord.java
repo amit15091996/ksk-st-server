@@ -49,7 +49,7 @@ public class PyamentsRecord {
 	private String paidProductGroup;
 	@Column(nullable = false)
 	private int paidProductQuantity;
-	@Column( columnDefinition="Decimal(20,3)")
+	@Column( columnDefinition="Decimal(20,2)")
 	private double TotalPaidAmount;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
