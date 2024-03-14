@@ -1,5 +1,6 @@
 package com.khadbhandarserver.inventory.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
 import com.khadbhandarserver.inventory.serviceImplementation.SalesRecordServiceImpl;
+import com.khadbhandarserver.inventory.util.DatabseUtil;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
 import com.khadbhandarserver.inventory.service.PyamentsRecordService;
 import com.khadbhandarserver.inventory.service.RecieptRecordService;
@@ -66,6 +68,8 @@ public class InventoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 	
+	@Autowired
+	private DatabseUtil databseUtil;
 	
 	
 	@PostMapping("/insert-ledger-details")
@@ -266,6 +270,13 @@ public class InventoryController {
 	
 	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
 	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
+		
+		try {
+			this.databseUtil.backupSqlData();
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		log.info(partyName);
 		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));

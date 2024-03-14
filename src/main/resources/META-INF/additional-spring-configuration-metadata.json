@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "sqlBackUpLocation",
+    "type": "java.lang.String",
+    "description": "A description for 'sqlBackUpLocation'"
+  },
+  {
+    "name": "dumpFilelocation",
+    "type": "java.lang.String",
+    "description": "A description for 'dumpFilelocation'"
+  }
+]}
