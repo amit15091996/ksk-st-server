@@ -51,6 +51,8 @@ public class RecieptsRecord {
 	private double recieptAmount;
 	@Column(nullable = false,length = 20)
 	private String recieptPaymentMode;
+	@Column(length = 30,nullable = false)
+	private String invoiceNumber;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
 	private SalesRecords salesRecords;
