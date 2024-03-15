@@ -1,0 +1,1 @@
+C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe  --host=localhost --port=3306 -uroot -pPriya@1997 C:\backup\khadServerBackup.sql

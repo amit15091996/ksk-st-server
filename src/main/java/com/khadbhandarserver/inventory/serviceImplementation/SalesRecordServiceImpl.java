@@ -86,7 +86,7 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 			});
 		}
 		else {
-			throw new BadRequest("Some of the item quantity you requested not avialable with us right now ");
+			throw new BadRequest("Some quantity of the item  you requested not avialable with us right now !! please check the quantity and try again  ");
 		}
 		
 		
