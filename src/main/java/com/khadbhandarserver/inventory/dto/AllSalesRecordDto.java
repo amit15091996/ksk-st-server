@@ -22,7 +22,7 @@ import lombok.Setter;
 public class AllSalesRecordDto {
 	private Long soldItemId;
 	private boolean isRecieptGenerated;
-	private RecieptsRecord recieptsRecord;
+	private List<RecieptsRecord> recieptsRecord;
 	private List<SalesRecordDto> salesList;
 	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)

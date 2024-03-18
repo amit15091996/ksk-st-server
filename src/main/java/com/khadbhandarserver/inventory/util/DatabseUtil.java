@@ -67,7 +67,7 @@ public class DatabseUtil {
 			  a=a+command[i]; 
 		  }
 		log.info(a);
-		
+		   
 		
 	        Process runtimeProcess = Runtime.getRuntime().exec(command);
 	        int processComplete = runtimeProcess.waitFor();

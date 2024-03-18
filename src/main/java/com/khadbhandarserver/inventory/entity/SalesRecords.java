@@ -1,6 +1,7 @@
 package com.khadbhandarserver.inventory.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -17,6 +18,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
@@ -41,9 +43,9 @@ public class SalesRecords {
 	private String soldItemList;
 	@Column(nullable = false,columnDefinition = "boolean")
 	private boolean isRecieptGenerated;
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
 	@JsonManagedReference
-	private RecieptsRecord recieptsRecord;
+	private List<RecieptsRecord> recieptsRecord;
 	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)

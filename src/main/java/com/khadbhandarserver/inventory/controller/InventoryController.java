@@ -99,6 +99,12 @@ public class InventoryController {
 		return ResponseEntity.ok(this.ledgerDetailsService.getAllLedgerDetails());
 	}
 	
+	@GetMapping("/get-ledger-details-by-customername/{customerName}")
+	public ResponseEntity<Map<Object, Object>> getLedgerDataByCustomerName(@PathVariable("customerName") String customerName ){
+		
+		return ResponseEntity.ok(this.ledgerDetailsService.getLedgerdetailsByName(customerName));
+	}
+	
 	
 	@PostMapping("/insert-stock-details")
 	public ResponseEntity<Map<Object, Object>> saveStockDetails(@RequestBody @Valid StockDetailsDto stockDetailsDto){
