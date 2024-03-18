@@ -30,7 +30,7 @@ public class InvoiceGenerator {
 	
 	public String InvoiceNumber(LocalDateTime localDatetime) {
 		
-		return localDatetime.format(DateTimeFormatter.ofPattern("HHmmssSSSS"));
+		return localDatetime.format(DateTimeFormatter.ofPattern("HHmmssSddMMyy"));
 	}
 	
 	public static void main(String[] args) {
