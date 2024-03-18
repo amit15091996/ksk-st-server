@@ -13,5 +13,5 @@ public interface LedgerDetailsService {
 	Map<Object, Object> deleteLedgerDetails(Long Id);
 	Map<Object, Object> updateLedgerDetails(Long ledgerId,LedgerDetailsDto ledgerDetailsDto);
 	Map<Object, Object> getAllLedgerDetails();
-	
+	Map<Object, Object> getLedgerdetailsByName(String customerName);
 }

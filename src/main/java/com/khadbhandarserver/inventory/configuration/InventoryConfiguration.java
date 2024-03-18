@@ -2,6 +2,7 @@ package com.khadbhandarserver.inventory.configuration;
 
 import java.util.Arrays;
 
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ import org.springframework.web.filter.CorsFilter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
+@EnableConfigurationProperties
 public class InventoryConfiguration {
 
 	  @Bean

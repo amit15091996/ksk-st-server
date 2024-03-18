@@ -22,19 +22,32 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
 	public Map<Object, Object> getCategoryWiseData(String CategoryName) {
 		  Map<Object, Object> CategoryMap=new HashMap<>();
 		  
-		  List<ProductCategory> productCategory=this.productCategoryRepository.findByCategoryName(CategoryName);
+		if(CategoryName.equalsIgnoreCase(AppConstant.ALL)) {
+			CategoryMap.put(AppConstant.statusCode, AppConstant.ok);
+			 CategoryMap.put(AppConstant.status, AppConstant.success);
+			 CategoryMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+			 CategoryMap.put(AppConstant.response,this.productCategoryRepository.findAll());
+			 
+			 return CategoryMap;
+		}
 		  
-		  CategoryMap.put(AppConstant.statusCode, AppConstant.ok);
-		  CategoryMap.put(AppConstant.status, AppConstant.success);
-		  CategoryMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
-		  CategoryMap.put(AppConstant.response,productCategory.size()>0? productCategory.get(0):productCategory);
+		else {
+			  
+			  List<ProductCategory> productCategory=this.productCategoryRepository.findByCategoryName(CategoryName);
+			  
+			  CategoryMap.put(AppConstant.statusCode, AppConstant.ok);
+			  CategoryMap.put(AppConstant.status, AppConstant.success);
+			  CategoryMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+			  CategoryMap.put(AppConstant.response,productCategory.size()>0? productCategory.get(0):productCategory);
+			
+			  return CategoryMap;
+		}
 		
-		  return CategoryMap;
 	}
 
 	@Override
 	public Map<Object, Object> getAllCategory() {
-  Map<Object, Object> CategoryMap=new HashMap<>();
+        Map<Object, Object> CategoryMap=new HashMap<>();
 		  
 		  CategoryMap.put(AppConstant.statusCode, AppConstant.ok);
 		  CategoryMap.put(AppConstant.status, AppConstant.success);

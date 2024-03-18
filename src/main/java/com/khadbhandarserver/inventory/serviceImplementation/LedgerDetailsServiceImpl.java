@@ -1,6 +1,7 @@
 package com.khadbhandarserver.inventory.serviceImplementation;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -111,6 +112,20 @@ public class LedgerDetailsServiceImpl implements LedgerDetailsService {
 		  responseMap.put(AppConstant.status, AppConstant.success);
 		  responseMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
 		  responseMap.put(AppConstant.response, this.ledgerDetailsRepository.findAll());
+			  
+			return responseMap;
+	}
+
+	@Override
+	public Map<Object, Object> getLedgerdetailsByName(String customerName) {
+		  Map<Object, Object> responseMap=new HashMap<>();
+	
+		  List<LedgerDetails> ledgerDetails=this.ledgerDetailsRepository.findByCustomerName(customerName);
+		  
+		  responseMap.put(AppConstant.statusCode, AppConstant.ok);
+		  responseMap.put(AppConstant.status, AppConstant.success);
+		  responseMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		  responseMap.put(AppConstant.response,ledgerDetails.size()>0 ? ledgerDetails.get(0):null);
 			  
 			return responseMap;
 	}

@@ -19,6 +19,7 @@ public class AppConstant {
 	public static final String requestBodyMissing="Required Request Body Is Missing ";
 	public static final String dataFetchedSuccesfully="Data fetched Successfully !!";
 	public static final String error="error";
+	public static final String ALL="ALL";
 	
 
 

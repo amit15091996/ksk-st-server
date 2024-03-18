@@ -1,5 +1,6 @@
 package com.khadbhandarserver.inventory.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
 import com.khadbhandarserver.inventory.serviceImplementation.SalesRecordServiceImpl;
+import com.khadbhandarserver.inventory.util.DatabseUtil;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
 import com.khadbhandarserver.inventory.service.PyamentsRecordService;
 import com.khadbhandarserver.inventory.service.RecieptRecordService;
@@ -66,6 +68,8 @@ public class InventoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 	
+	@Autowired
+	private DatabseUtil databseUtil;
 	
 	
 	@PostMapping("/insert-ledger-details")
@@ -93,6 +97,12 @@ public class InventoryController {
 	public ResponseEntity<Map<Object, Object>> getAllLedgerDetailsRecord(){
 		
 		return ResponseEntity.ok(this.ledgerDetailsService.getAllLedgerDetails());
+	}
+	
+	@GetMapping("/get-ledger-details-by-customername/{customerName}")
+	public ResponseEntity<Map<Object, Object>> getLedgerDataByCustomerName(@PathVariable("customerName") String customerName ){
+		
+		return ResponseEntity.ok(this.ledgerDetailsService.getLedgerdetailsByName(customerName));
 	}
 	
 	
@@ -266,6 +276,15 @@ public class InventoryController {
 	
 	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
 	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
+		
+//		try {
+////			this.databseUtil.backupSqlData();
+//			this.databseUtil.retriveBackupSqlData();
+//		} catch (IOException | InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
 		
 		log.info(partyName);
 		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));

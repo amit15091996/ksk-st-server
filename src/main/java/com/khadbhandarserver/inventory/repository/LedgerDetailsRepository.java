@@ -1,5 +1,7 @@
 package com.khadbhandarserver.inventory.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -21,5 +23,7 @@ public interface LedgerDetailsRepository extends JpaRepository<LedgerDetails, Lo
 			@Param("customerArea") String customerArea,
 			@Param("ledgerId") Long ledgerId
 			);
+	
+	List<LedgerDetails> findByCustomerName(String customerName);
 
 }
