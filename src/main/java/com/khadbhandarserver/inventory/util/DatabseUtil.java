@@ -1,5 +1,6 @@
 package com.khadbhandarserver.inventory.util;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 
@@ -39,37 +40,30 @@ public class DatabseUtil {
 	       log.info(backupCommand);
 	 
 	        Process process = Runtime.getRuntime().exec(backupCommand);
-	        log.info(process.toString());
+	        process.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
 	        int processComplete = process.waitFor();
 	        return processComplete == 0;
 	    }
 	 
 	 public boolean retriveBackupSqlData() throws IOException, InterruptedException {
 		
-//		 String retriveSqlFile=this.mysqlFileLocation+" "+"-u"+this.databaseUserName+" -p"+this.databasePassword+" -e"+" source"+ " "+this.location +" ppanda-server";
-		 
-		 
-//		 String retriveSqlFile=this.mysqlFileLocation+" "+"-u"+this.databaseUserName+" -p"+this.databasePassword+" source"+" "+this.location ;
-	
-	
-		
-		
-		 
 		  String[] command = new String[]{
 			  this.mysqlFileLocation,
-	                " --u" + this.databaseUserName,
-	                " --p" + this.databasePassword,
-	                " -e",
-	                " source " + this.location};
+	                " -u" + this.databaseUserName,
+	                " -p" + this.databasePassword,
+	                " -e ",
+	                " source " +this.location};
 		 
 		  String a="";
 		  for(int i=0;i<command.length;i++) {
 			  a=a+command[i]; 
 		  }
 		log.info(a);
-		   
 		
 	        Process runtimeProcess = Runtime.getRuntime().exec(command);
+	      
+//	        runtimeProcess.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
+	        
 	        int processComplete = runtimeProcess.waitFor();
 	        
 	        return processComplete == 0;

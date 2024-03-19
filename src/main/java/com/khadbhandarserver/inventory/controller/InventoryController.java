@@ -277,13 +277,13 @@ public class InventoryController {
 	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
 	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
 		
-//		try {
-////			this.databseUtil.backupSqlData();
+		try {
+			this.databseUtil.backupSqlData();
 //			this.databseUtil.retriveBackupSqlData();
-//		} catch (IOException | InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		} catch (IOException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		log.info(partyName);
