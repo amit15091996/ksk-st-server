@@ -16,6 +16,6 @@ spring:
       ddl-auto: update
     show-sql: true
     
-sqlBackUpLocation: C:\backup\khadServerBackup.sql
+sqlBackUpLocation: C:\\backup\\khadServerBackup.sql
 dumpFilelocation: C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump.exe
 mysqlFileLocation: C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysql.exe      
