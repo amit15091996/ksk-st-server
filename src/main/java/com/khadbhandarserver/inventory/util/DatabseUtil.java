@@ -48,11 +48,11 @@ public class DatabseUtil {
 	 public boolean retriveBackupSqlData() throws IOException, InterruptedException {
 		
 		  String[] command = new String[]{
-			  this.mysqlFileLocation,
+			    "C:\\Windows\\System32\\cmd.exe"," mysql",
 	                " -u" + this.databaseUserName,
 	                " -p" + this.databasePassword,
-	                " -e ",
-	                " source " +this.location};
+	                "",
+	                " source " +"C:\\backup\\khadServerBackup.sql"};
 		 
 		  String a="";
 		  for(int i=0;i<command.length;i++) {
@@ -62,7 +62,9 @@ public class DatabseUtil {
 		
 	        Process runtimeProcess = Runtime.getRuntime().exec(command);
 	      
-//	        runtimeProcess.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
+	        log.info( Runtime.getRuntime().exec("ipconfig").toString());
+	        
+	        runtimeProcess.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
 	        
 	        int processComplete = runtimeProcess.waitFor();
 	        
