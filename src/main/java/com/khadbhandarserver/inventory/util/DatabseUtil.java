@@ -1,8 +1,8 @@
 package com.khadbhandarserver.inventory.util;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.Map;
+import java.io.InputStreamReader;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -31,44 +31,41 @@ public class DatabseUtil {
 	@Value("${mysqlFileLocation}")
 	private  String mysqlFileLocation;
 	
-	 public  boolean backupSqlData()
-	            throws IOException, InterruptedException {
-		 String backupCommand=this.dumpFileLocation+" "+"-u"+this.databaseUserName+" "+"-p"+this.databasePassword+" "+"--add-drop-table --databases "+"ppanda-server"+" -r "+this.location;
-		 
-//		 String backupCommand=this.dumpFileLocation+" "+"-u"+this.databaseUserName+" "+"-p"+this.databasePassword+" "+"--add-drop-table --databases "+this.databaseName+" -r "+this.location;
-		 
+	 public  boolean backupSqlData(){
+		 String backupCommand=this.dumpFileLocation+" "+"-u"+this.databaseUserName+" "+"-p"+this.databasePassword+" "+"--add-drop-table --databases "+this.databaseName+" -r "+this.location;
 	       log.info(backupCommand);
-	 
-	        Process process = Runtime.getRuntime().exec(backupCommand);
-	        process.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
-	        int processComplete = process.waitFor();
+	       int processComplete=0;
+	       try {
+	    	   Process process = Runtime.getRuntime().exec(backupCommand);
+		         processComplete = process.waitFor();
+	       }
+	       catch (IOException | InterruptedException e) {
+			log.info(e.getLocalizedMessage());
+		}
+	      
 	        return processComplete == 0;
 	    }
 	 
-	 public boolean retriveBackupSqlData() throws IOException, InterruptedException {
+	 public boolean retriveBackupSqlData(){
 		
-		  String[] command = new String[]{
-			    "C:\\Windows\\System32\\cmd.exe"," mysql",
-	                " -u" + this.databaseUserName,
-	                " -p" + this.databasePassword,
-	                "",
-	                " source " +"C:\\backup\\khadServerBackup.sql"};
 		 
-		  String a="";
-		  for(int i=0;i<command.length;i++) {
-			  a=a+command[i]; 
-		  }
-		log.info(a);
-		
-	        Process runtimeProcess = Runtime.getRuntime().exec(command);
-	      
-	        log.info( Runtime.getRuntime().exec("ipconfig").toString());
-	        
-	        runtimeProcess.inputReader().lines().forEach((i)->System.out.println("---line-- "+i));
-	        
-	        int processComplete = runtimeProcess.waitFor();
-	        
-	        return processComplete == 0;
+		 int exitCode = 0;
+		 
+		 try {
+	            ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "mysql", "--login-path=client", "<", this.location);
+	            pb.redirectErrorStream(true);
+	            Process process = pb.start();
+	            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	            String line;
+	            while ((line = reader.readLine()) != null) {
+	               log.info(line);
+	            }
+	            exitCode = process.waitFor();
+	            log.info("MySQL command executed with exit code:-"+exitCode);
+	        } catch (IOException | InterruptedException e) {
+	           log.info(e.getLocalizedMessage());
+	        }	        
+	        return exitCode==0;
 	 }
 	 
 	

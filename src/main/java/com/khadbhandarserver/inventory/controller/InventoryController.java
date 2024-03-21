@@ -1,6 +1,7 @@
 package com.khadbhandarserver.inventory.controller;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.ProductCategoryService;
 import com.khadbhandarserver.inventory.service.SalesRecordService;
 import com.khadbhandarserver.inventory.service.StockDetailsService;
+import com.khadbhandarserver.inventory.serviceImplementation.GoogleDriveServicesImpl;
 import com.khadbhandarserver.inventory.serviceImplementation.SalesRecordServiceImpl;
 import com.khadbhandarserver.inventory.util.DatabseUtil;
 import com.khadbhandarserver.inventory.service.PurchaseRecordService;
@@ -68,8 +70,9 @@ public class InventoryController {
 	@Autowired
 	private ProductCategoryService productCategoryService;
 	
+	
 	@Autowired
-	private DatabseUtil databseUtil;
+	private GoogleDriveServicesImpl googleDriveServicesImpl;
 	
 	
 	@PostMapping("/insert-ledger-details")
@@ -276,15 +279,14 @@ public class InventoryController {
 	
 	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
 	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
+				
 		
-//		try {
-//			this.databseUtil.backupSqlData();
-////			this.databseUtil.retriveBackupSqlData();
-//		} catch (IOException | InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
+		try {
+			this.googleDriveServicesImpl.getfiles();
+		} catch (IOException | GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		log.info(partyName);
 		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));
