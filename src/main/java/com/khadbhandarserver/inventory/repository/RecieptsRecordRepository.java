@@ -14,23 +14,16 @@ import jakarta.transaction.Transactional;
 
 @Repository
 @Transactional
-public interface RecieptsRecordRepository  extends JpaRepository<RecieptsRecord, Long>{
+public interface RecieptsRecordRepository extends JpaRepository<RecieptsRecord, Long> {
 
-	@Modifying(flushAutomatically = true,clearAutomatically = true)
-	@Query("UPDATE RecieptsRecord rr  SET rr.recipientName=:recipientName,"
-			+ "rr.recipientAddress=:recipientAddress,"
-			+ "rr.recipientMobileNumber=:recipientMobileNumber,"
-			+ "rr.recieptDate=:recieptDate,"
-			+ "rr.recieptAmount=:recieptAmount,"
-			+ "rr.recieptPaymentMode=:recieptPaymentMode"
+	@Modifying(flushAutomatically = true, clearAutomatically = true)
+	@Query("UPDATE RecieptsRecord rr  SET rr.recipientName=:recipientName," + "rr.recipientAddress=:recipientAddress,"
+			+ "rr.recipientMobileNumber=:recipientMobileNumber," + "rr.recieptDate=:recieptDate,"
+			+ "rr.recieptAmount=:recieptAmount," + "rr.recieptPaymentMode=:recieptPaymentMode"
 			+ " WHERE rr.recieptId=:recieptId")
-	public void updateRecieptRecord(
-			@Param("recipientName") String recipientName,
+	public void updateRecieptRecord(@Param("recipientName") String recipientName,
 			@Param("recipientAddress") String recipientAddress,
-			@Param("recipientMobileNumber") String recipientMobileNumber,
-			@Param("recieptDate")LocalDate recieptDate,
-			@Param("recieptAmount") double recieptAmount,
-			@Param("recieptPaymentMode") String recieptPaymentMode,
-			@Param("recieptId") Long recieptId
-			);
+			@Param("recipientMobileNumber") String recipientMobileNumber, @Param("recieptDate") LocalDate recieptDate,
+			@Param("recieptAmount") double recieptAmount, @Param("recieptPaymentMode") String recieptPaymentMode,
+			@Param("recieptId") Long recieptId);
 }

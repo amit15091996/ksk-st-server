@@ -21,110 +21,105 @@ import com.khadbhandarserver.inventory.util.InvoiceGenerator;
 
 @Service
 public class RecieptRecordServiceImpl implements RecieptRecordService {
-	
+
 	@Autowired
 	private SalesRecordRepository salesRecordRepository;
-	
+
 	@Autowired
 	private RecieptsRecordRepository RecieptsRecordRepository;
-	
+
 	@Autowired
 	private InvoiceGenerator invoiceGenerator;
-	
 
 	@Override
-	public Map<Object, Object> insertRecieptRecord(Long soldItemId,RecieptsRecordDto recieptsRecordDto) {
-		  Map<Object, Object> recieptRecordMap=new HashMap<>();		  
-		  RecieptsRecord recieptsRecord=new RecieptsRecord();
-		  
-		  Optional<SalesRecords> salesRecords=this.salesRecordRepository.findById(soldItemId);
-		  
-		  
-		  if(salesRecords.isPresent()) {
-			  
-			  recieptsRecord.setRecipientName(recieptsRecordDto.getRecipientName());
-			  recieptsRecord.setRecieptAmount(recieptsRecordDto.getRecieptAmount());
-			  recieptsRecord.setRecieptDate(recieptsRecordDto.getRecieptDate());
-			  recieptsRecord.setRecieptPaymentMode(recieptsRecordDto.getRecieptPaymentMode());
-			  recieptsRecord.setRecipientAddress(recieptsRecordDto.getRecipientAddress());
-			  recieptsRecord.setRecipientMobileNumber(recieptsRecordDto.getRecipientMobileNumber());
-			  recieptsRecord.setInvoiceNumber(this.invoiceGenerator.InvoiceNumber(LocalDateTime.now()));
-			  recieptsRecord.setSalesRecords(salesRecords.get());	        
-			
+	public Map<Object, Object> insertRecieptRecord(Long soldItemId, RecieptsRecordDto recieptsRecordDto) {
+		Map<Object, Object> recieptRecordMap = new HashMap<>();
+		RecieptsRecord recieptsRecord = new RecieptsRecord();
+
+		Optional<SalesRecords> salesRecords = this.salesRecordRepository.findById(soldItemId);
+
+		if (salesRecords.isPresent()) {
+
+			recieptsRecord.setRecipientName(recieptsRecordDto.getRecipientName());
+			recieptsRecord.setRecieptAmount(recieptsRecordDto.getRecieptAmount());
+			recieptsRecord.setRecieptDate(recieptsRecordDto.getRecieptDate());
+			recieptsRecord.setRecieptPaymentMode(recieptsRecordDto.getRecieptPaymentMode());
+			recieptsRecord.setRecipientAddress(recieptsRecordDto.getRecipientAddress());
+			recieptsRecord.setRecipientMobileNumber(recieptsRecordDto.getRecipientMobileNumber());
+			recieptsRecord.setInvoiceNumber(this.invoiceGenerator.InvoiceNumber(LocalDateTime.now()));
+			recieptsRecord.setSalesRecords(salesRecords.get());
+
 			try {
-				RecieptsRecord recieptsRecordSaved=this.RecieptsRecordRepository.save(recieptsRecord);
-			if( recieptsRecordSaved !=null) {
-				this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(true,soldItemId);
-				recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
-				recieptRecordMap.put(AppConstant.status, AppConstant.success);
-				recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
-			}
-			}
-			catch(Exception e) {
+				RecieptsRecord recieptsRecordSaved = this.RecieptsRecordRepository.save(recieptsRecord);
+				if (recieptsRecordSaved != null) {
+					this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(true, soldItemId);
+					recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
+					recieptRecordMap.put(AppConstant.status, AppConstant.success);
+					recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
+				}
+			} catch (Exception e) {
 				throw new BadRequest(e.getMessage());
 			}
-			
-		  }else {throw new NotFoundException(AppConstant.noRecordFound + soldItemId);}
-		   return recieptRecordMap; 
+
+		} else {
+			throw new NotFoundException(AppConstant.noRecordFound + soldItemId);
+		}
+		return recieptRecordMap;
 	}
 
 	@Override
 	public Map<Object, Object> deleteRecieptRecord(Long recieptId) {
-		 Map<Object, Object> recieptRecordMap=new HashMap<>();
-		 
-		 Optional<RecieptsRecord> recieptRecord=this.RecieptsRecordRepository.findById(recieptId);
-			if(recieptRecord.isPresent()) {
+		Map<Object, Object> recieptRecordMap = new HashMap<>();
+
+		Optional<RecieptsRecord> recieptRecord = this.RecieptsRecordRepository.findById(recieptId);
+		if (recieptRecord.isPresent()) {
 			this.RecieptsRecordRepository.deleteById(recieptId);
-			this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(false,recieptRecord.get().getSalesRecords().getSoldItemId());
+			this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(false,
+					recieptRecord.get().getSalesRecords().getSoldItemId());
 			recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 			recieptRecordMap.put(AppConstant.status, AppConstant.success);
 			recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataDeletedSuccesFully);
-			}
-			else {
-				throw new NotFoundException(AppConstant.noRecordFound + recieptId);
-			}
-			return recieptRecordMap;
+		} else {
+			throw new NotFoundException(AppConstant.noRecordFound + recieptId);
+		}
+		return recieptRecordMap;
 	}
 
 	@Override
 	public Map<Object, Object> updateRecieptRecord(Long recieptId, RecieptsRecordDto recieptsRecordDto) {
-		Map<Object, Object> recieptRecordMap=new HashMap<>();
-		
-		  if(this.RecieptsRecordRepository.findById(recieptId).isPresent()) {
+		Map<Object, Object> recieptRecordMap = new HashMap<>();
+
+		if (this.RecieptsRecordRepository.findById(recieptId).isPresent()) {
 			try {
-			
-				this.RecieptsRecordRepository.updateRecieptRecord(
-						recieptsRecordDto.getRecipientName(),
-						recieptsRecordDto.getRecipientAddress(),
-						recieptsRecordDto.getRecipientMobileNumber(),
-						recieptsRecordDto.getRecieptDate(),
-						recieptsRecordDto.getRecieptAmount(),
-						recieptsRecordDto.getRecieptPaymentMode(),
-						recieptId
-						);
-			
-		
+
+				this.RecieptsRecordRepository.updateRecieptRecord(recieptsRecordDto.getRecipientName(),
+						recieptsRecordDto.getRecipientAddress(), recieptsRecordDto.getRecipientMobileNumber(),
+						recieptsRecordDto.getRecieptDate(), recieptsRecordDto.getRecieptAmount(),
+						recieptsRecordDto.getRecieptPaymentMode(), recieptId);
+
 				recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 				recieptRecordMap.put(AppConstant.status, AppConstant.success);
-				recieptRecordMap.put(AppConstant.statusMessage, AppConstant.recordUpdatedSuccessFully +recieptId);
+				recieptRecordMap.put(AppConstant.statusMessage, AppConstant.recordUpdatedSuccessFully + recieptId);
+			} catch (Exception e) {
+				throw new BadRequest(e.getMessage());
 			}
-			catch (Exception e) {throw new BadRequest(e.getMessage());}
-			}
-			else {throw new NotFoundException(AppConstant.noRecordFound + recieptId);}
-		
+		} else {
+			throw new NotFoundException(AppConstant.noRecordFound + recieptId);
+		}
+
 		return recieptRecordMap;
 	}
 
 	@Override
 	public Map<Object, Object> getAllRecieptRecord() {
-		  Map<Object, Object> recieptRecordMap=new HashMap<>();
-			
-		  recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
-		  recieptRecordMap.put(AppConstant.status, AppConstant.success);
-		  recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
-		  recieptRecordMap.put(AppConstant.response, this.RecieptsRecordRepository.findAll());
-			  
-			return recieptRecordMap;
+		Map<Object, Object> recieptRecordMap = new HashMap<>();
+
+		recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
+		recieptRecordMap.put(AppConstant.status, AppConstant.success);
+		recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
+		recieptRecordMap.put(AppConstant.response, this.RecieptsRecordRepository.findAll());
+
+		return recieptRecordMap;
 	}
 
 }

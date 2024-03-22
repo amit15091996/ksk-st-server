@@ -24,5 +24,5 @@ public class StockDetailsDto {
 	private String stockUnit;
 	@NotNull(message = "Please enter stock price(Mandatory)")
 	private double stockPrice;
-	
+
 }

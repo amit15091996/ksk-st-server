@@ -1,16 +1,15 @@
 package com.khadbhandarserver.inventory.exception;
 
-public class NotFoundException extends RuntimeException {
+public class InternalServerError extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public NotFoundException() {
+	public InternalServerError() {
 		super();
 	}
 
-	public NotFoundException(String message) {
+	public InternalServerError(String message) {
 		super(message);
 
 	}
-
 }

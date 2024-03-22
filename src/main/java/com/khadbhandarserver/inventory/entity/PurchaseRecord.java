@@ -29,37 +29,37 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name ="PURCHASE_RECORD" )
+@Table(name = "PURCHASE_RECORD")
 @Entity
 public class PurchaseRecord {
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "purchase_record_sequence")
+	@TableGenerator(allocationSize = 1, initialValue = 0, name = "purchase_record_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="purchase_record_sequence" )
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "purchase_record_sequence")
 	private Long purchasedItemId;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String purchasedItemName;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String purchasedItemCategory;
 	@Column(nullable = false)
 	private int purchasedItemQuantity;
-	@Column(length = 20,nullable = false)
+	@Column(length = 20, nullable = false)
 	private String purchasedItemUnit;
 	@Column(nullable = false)
 	private double purchasedItemPrice;
-	@Column( columnDefinition="Decimal(20,2)")
+	@Column(columnDefinition = "Decimal(20,2)")
 	private double purchasedItemTotalAmount;
 	@Column(nullable = false)
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate purchaseDate;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String purchasedFrom;
-	
-	@Column(nullable = false,columnDefinition = "boolean")
+
+	@Column(nullable = false, columnDefinition = "boolean")
 	private boolean isPaymentDone;
 
-	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "purchaseRecord")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "purchaseRecord")
 	@JsonManagedReference
 	private PyamentsRecord pyamentsRecord;
 

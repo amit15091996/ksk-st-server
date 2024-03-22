@@ -15,32 +15,23 @@ import jakarta.transaction.Transactional;
 @Repository
 @Transactional
 public interface PurchaseRecordRepository extends JpaRepository<PurchaseRecord, Long> {
-	@Modifying(flushAutomatically = true,clearAutomatically = true)
+	@Modifying(flushAutomatically = true, clearAutomatically = true)
 	@Query("UPDATE PurchaseRecord pr  SET pr.purchasedItemName=:purchasedItemName,"
-			+ "pr.purchasedItemCategory=:purchasedItemCategory,"
-			+ "pr.purchasedItemQuantity=:purchasedItemQuantity,"
-			+ "pr.purchasedItemUnit=:purchasedItemUnit,"
-			+ "pr.purchasedItemPrice=:purchasedItemPrice,"
-			+ "pr.purchasedItemTotalAmount=:purchasedItemTotalAmount,"
-			+ "pr.purchaseDate=:purchaseDate,"
+			+ "pr.purchasedItemCategory=:purchasedItemCategory," + "pr.purchasedItemQuantity=:purchasedItemQuantity,"
+			+ "pr.purchasedItemUnit=:purchasedItemUnit," + "pr.purchasedItemPrice=:purchasedItemPrice,"
+			+ "pr.purchasedItemTotalAmount=:purchasedItemTotalAmount," + "pr.purchaseDate=:purchaseDate,"
 			+ "pr.purchasedFrom=:purchasedFrom WHERE pr.purchasedItemId=:purchasedItemId")
-	public void updatePurchaseRecord(
-			@Param("purchasedItemName") String purchasedItemName,
+	public void updatePurchaseRecord(@Param("purchasedItemName") String purchasedItemName,
 			@Param("purchasedItemCategory") String purchasedItemCategory,
 			@Param("purchasedItemQuantity") int purchasedItemQuantity,
 			@Param("purchasedItemUnit") String purchasedItemUnit,
 			@Param("purchasedItemPrice") double purchasedItemPrice,
 			@Param("purchasedItemTotalAmount") double purchasedItemTotalAmount,
-			@Param("purchaseDate")LocalDate purchaseDate,
-			@Param("purchasedFrom")String purchasedFrom,
-			@Param("purchasedItemId") Long purchasedItemId
-			);
-	
-	
-	@Modifying(flushAutomatically = true,clearAutomatically = true)
+			@Param("purchaseDate") LocalDate purchaseDate, @Param("purchasedFrom") String purchasedFrom,
+			@Param("purchasedItemId") Long purchasedItemId);
+
+	@Modifying(flushAutomatically = true, clearAutomatically = true)
 	@Query("UPDATE PurchaseRecord pr  SET pr.isPaymentDone=:isPaymentDone WHERE pr.purchasedItemId=:purchasedItemId")
-	public void updateIsPaymentDoneColumn(
-			@Param("isPaymentDone") boolean isPaymentDone,
-			@Param("purchasedItemId") Long purchasedItemId
-			);
+	public void updateIsPaymentDoneColumn(@Param("isPaymentDone") boolean isPaymentDone,
+			@Param("purchasedItemId") Long purchasedItemId);
 }

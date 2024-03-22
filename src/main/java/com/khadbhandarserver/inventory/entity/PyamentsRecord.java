@@ -32,27 +32,27 @@ import lombok.Setter;
 @Entity
 public class PyamentsRecord {
 
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "payment_details_sequence")
+	@TableGenerator(allocationSize = 1, initialValue = 0, name = "payment_details_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="payment_details_sequence" )
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "payment_details_sequence")
 	private long paymentId;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String payeeName;
 	@Column(nullable = false)
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate paymentDate;
 	@Column(nullable = false)
 	private double paymentAmountPerUnit;
-	@Column(length = 20,nullable = false)
+	@Column(length = 20, nullable = false)
 	private String paidProductGroup;
 	@Column(nullable = false)
 	private int paidProductQuantity;
-	@Column( columnDefinition="Decimal(20,2)")
+	@Column(columnDefinition = "Decimal(20,2)")
 	private double TotalPaidAmount;
 	@OneToOne(fetch = FetchType.LAZY)
 	@JsonBackReference
 	private PurchaseRecord purchaseRecord;
-	
+
 }

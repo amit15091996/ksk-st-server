@@ -34,10 +34,10 @@ public class SalesRecordDto {
 	private String partyName;
 	@NotNull(message = "Please enter sold Item price(Mandatory)")
 	private double soldItemPrice;
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@NotNull(message = "Please enter item sell date(Mandatory)")
 	private LocalDate sellDate;
-	
+
 }

@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecieptsRecordDto {
-	
+
 	@NotBlank(message = "Please enter  Recipient Name(Mandatory)")
 	private String recipientName;
 	@NotBlank(message = "Please enter Recipient address(Mandatory)")
@@ -27,7 +27,5 @@ public class RecieptsRecordDto {
 	private LocalDate recieptDate;
 	@NotBlank(message = "Please enter payment mode (Mandatory)")
 	private String recieptPaymentMode;
-	
-	
 
 }

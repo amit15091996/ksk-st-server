@@ -1,7 +1,5 @@
 package com.khadbhandarserver.inventory.entity;
 
-import org.hibernate.annotations.Type;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,22 +19,21 @@ import lombok.Setter;
 @Table(name = "STOCK_DETAILS")
 @Entity
 public class StockDetails {
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "stock_details_sequence")
+	@TableGenerator(allocationSize = 1, initialValue = 0, name = "stock_details_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="stock_details_sequence" )
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "stock_details_sequence")
 	private Long stockId;
-	@Column(length = 200,nullable = false,unique = true)
+	@Column(length = 200, nullable = false, unique = true)
 	private String stockName;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String stockCategory;
 	@Column(nullable = false)
 	private int stockQuantity;
-	@Column(length = 20,nullable = false)
+	@Column(length = 20, nullable = false)
 	private String stockUnit;
 	@Column(nullable = false)
 	private double stockPrice;
-	@Column( columnDefinition="Decimal(20,2)")
+	@Column(columnDefinition = "Decimal(20,2)")
 	private double totalStockAmount;
-	
 
 }

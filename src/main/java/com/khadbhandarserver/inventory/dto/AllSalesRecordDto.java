@@ -24,7 +24,7 @@ public class AllSalesRecordDto {
 	private boolean isRecieptGenerated;
 	private List<RecieptsRecord> recieptsRecord;
 	private List<SalesRecordDto> salesList;
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate sellDate;
