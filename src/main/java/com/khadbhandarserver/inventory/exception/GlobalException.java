@@ -120,4 +120,31 @@ public class GlobalException {
 	}
 	
 	
+	
+	
+	@ExceptionHandler(InternalServerError.class)
+	public ResponseEntity<Map<Object, Object>> internalServerError(InternalServerError internalServerError,WebRequest request){
+		
+		
+  CustomException badRequestException=new CustomException(
+		  AppConstant.Internal_Server_Error,
+		  AppConstant.Internal_Server_Error_desc,
+		  LocalDateTime.now(),
+		  internalServerError.getMessage(),
+		  request.getDescription(false)
+		  );
+		
+		Map<Object, Object> internalServerErrorMap=new HashMap<>();
+		
+		internalServerErrorMap.put(AppConstant.statusCode, badRequestException.getStatusCode());
+		internalServerErrorMap.put(AppConstant.status, badRequestException.getStatus());
+		internalServerErrorMap.put(AppConstant.timeStamp, badRequestException.getTimestamp().toString());
+		internalServerErrorMap.put(AppConstant.statusMessage, badRequestException.getMessage());
+		internalServerErrorMap.put(AppConstant.description, badRequestException.getDescription());
+		return ResponseEntity.ok(internalServerErrorMap);
+		
+	}
+	
+	
+	
 }

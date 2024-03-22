@@ -20,10 +20,8 @@ public class AppConstant {
 	public static final String dataFetchedSuccesfully="Data fetched Successfully !!";
 	public static final String error="error";
 	public static final String ALL="ALL";
+	public static final String submitedFileId="submitedFileId";
 	
-
-
-
 	public static final int ok=200;
 	public static final int created=201;
 	public static final int accepeted=202;

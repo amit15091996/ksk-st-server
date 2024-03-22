@@ -2,6 +2,7 @@ package com.khadbhandarserver.inventory.controller;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -25,6 +28,7 @@ import com.khadbhandarserver.inventory.dto.PyamentsRecordDto;
 import com.khadbhandarserver.inventory.dto.RecieptsRecordDto;
 import com.khadbhandarserver.inventory.dto.SalesRecordDto;
 import com.khadbhandarserver.inventory.dto.StockDetailsDto;
+import com.khadbhandarserver.inventory.service.GoogleDriveServices;
 import com.khadbhandarserver.inventory.service.InventoryItemService;
 import com.khadbhandarserver.inventory.service.LedgerDetailsService;
 import com.khadbhandarserver.inventory.service.ProductCategoryService;
@@ -72,7 +76,7 @@ public class InventoryController {
 	
 	
 	@Autowired
-	private GoogleDriveServicesImpl googleDriveServicesImpl;
+	private GoogleDriveServices googleDriveServices; 
 	
 	
 	@PostMapping("/insert-ledger-details")
@@ -280,19 +284,23 @@ public class InventoryController {
 	@GetMapping("/get-all-sales-record-by-party-name/{partyName}")
 	public ResponseEntity<Map<Object, Object>> getAllSalesRecordViaPartyName(@PathVariable("partyName") String partyName) throws JsonMappingException, JsonProcessingException{
 				
-		
-		try {
-			this.googleDriveServicesImpl.getfiles();
-		} catch (IOException | GeneralSecurityException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		log.info(partyName);
 		return ResponseEntity.ok(this.salesRecordService.getSoldItemByPartyName(partyName));
 	}
 	
 	
+	@GetMapping("/get-all-google-drive-file")
+	public ResponseEntity<Map<Object, Object>> getGoogleDriveFile( @RequestParam(name ="file",required = true) MultipartFile mulFile ){
+		
+		return ResponseEntity.ok(this.googleDriveServices.getAllFilesPresentInGdrive());
+	}
+	
+	@PostMapping("/upload-file-to-google-drive")
+	public ResponseEntity<Map<Object, Object>> uploadFileToGoogleDrive( @RequestParam(name ="file",required = true) MultipartFile multipartFile ){
+		
+		return ResponseEntity.ok(this.googleDriveServices.uploadFileToGdrive(multipartFile));
+	}
+
 	
 	
 }
