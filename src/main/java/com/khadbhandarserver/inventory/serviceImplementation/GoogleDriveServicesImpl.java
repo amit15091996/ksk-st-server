@@ -1,4 +1,5 @@
 package com.khadbhandarserver.inventory.serviceImplementation;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -72,7 +73,7 @@ public class GoogleDriveServicesImpl implements GoogleDriveServices {
 					: this.googleDriveUtils.createFolderInGdrive("khad-server-backup");
 			File fileMetadata = new File();
 			fileMetadata.setParents(Collections.singletonList(folderId));
-			fileMetadata.setName(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss"))+"-"+multipartFile.getOriginalFilename());
+			fileMetadata.setName(multipartFile.getOriginalFilename()+"-"+LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss")));
 			File uploadFile = googleService.files()
 					.create(fileMetadata, new InputStreamContent(multipartFile.getContentType(),
 							new ByteArrayInputStream(multipartFile.getBytes())))
@@ -105,7 +106,10 @@ public class GoogleDriveServicesImpl implements GoogleDriveServices {
 				
 	byte[] is=googleService.files().get(googleDriveFilesviaQuery.size()>0?googleDriveFilesviaQuery.get(0).getId():"").executeMediaAsInputStream().readAllBytes();
 	FileOutputStream fos=new FileOutputStream(new java.io.File("C:\\backup\\ppanda.sql"));
-	fos.write(is);
+	BufferedOutputStream bos=new BufferedOutputStream(fos);
+	bos.write(is);
+	bos.flush();
+	bos.close();
 	fos.close();
 
 			return true;	
@@ -114,7 +118,6 @@ public class GoogleDriveServicesImpl implements GoogleDriveServices {
 				
 				log.info("--something went wrong--- "+e.getLocalizedMessage());
 			}
-	
 		
 		return false;
 	}
