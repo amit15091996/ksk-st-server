@@ -7,10 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import com.khadbhandarserver.inventory.entity.ProductCategory;
 
-import jakarta.transaction.Transactional;
-
 @Repository
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, Long> {
-    
-		List<ProductCategory> findByCategoryName(String categoryName);
+
+	List<ProductCategory> findByCategoryName(String categoryName);
 }

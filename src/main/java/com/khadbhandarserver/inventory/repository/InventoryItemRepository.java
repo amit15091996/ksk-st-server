@@ -14,16 +14,13 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface InventoryItemRepository extends JpaRepository<InventoryItem, Long> {
 
-
-	@Modifying(flushAutomatically = true,clearAutomatically = true)
+	@Modifying(flushAutomatically = true, clearAutomatically = true)
 	@Query("UPDATE InventoryItem ii  SET ii.inventoryItemName=:inventoryItemName,ii.inventoryItemCategory=:inventoryItemCategory,ii.inventoryItemQuantity=:inventoryItemQuantity,ii.inventoryItemUnit=:inventoryItemUnit,ii.inventoryItemPrice=:inventoryItemPrice,ii.inventoryItemTotalAmount=:inventoryItemTotalAmount WHERE ii.inventoryItemId=:inventoryItemId")
-	public void updateInventoryItemDetals(
-			@Param("inventoryItemName") String inventoryItemName,
+	public void updateInventoryItemDetals(@Param("inventoryItemName") String inventoryItemName,
 			@Param("inventoryItemCategory") String inventoryItemCategory,
 			@Param("inventoryItemQuantity") int inventoryItemQuantity,
 			@Param("inventoryItemUnit") String inventoryItemUnit,
 			@Param("inventoryItemPrice") double inventoryItemPrice,
 			@Param("inventoryItemTotalAmount") double inventoryItemTotalAmount,
-			@Param("inventoryItemId") Long inventoryItemId
-			);
+			@Param("inventoryItemId") Long inventoryItemId);
 }

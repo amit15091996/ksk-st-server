@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class GoogleDriveFilesDto {
-	
+
 	private String id;
 	private String kind;
 	private String mimeType;

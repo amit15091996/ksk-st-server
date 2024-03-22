@@ -1,7 +1,5 @@
 package com.khadbhandarserver.inventory.dto;
 
-import java.util.Map;
-
 import com.khadbhandarserver.inventory.entity.StockDetails;
 
 import lombok.AllArgsConstructor;
@@ -16,9 +14,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class UpdatedSalesRecord {
-	
+
 	private int totalQuantity;
 	private StockDetails stockDetails;
-	
-  
+
 }

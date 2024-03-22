@@ -29,5 +29,5 @@ public class PurchaseRecordDto {
 	private LocalDate purchaseDate;
 	@NotBlank(message = "Please enter Item purchased from(Mandatory)")
 	private String purchasedFrom;
-	
+
 }

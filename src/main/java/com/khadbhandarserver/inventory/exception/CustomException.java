@@ -19,15 +19,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomException {
-	
-	  private int statusCode;
-	  private String status;
-	  @JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
-	  @JsonSerialize(using = LocalDateTimeSerializer.class)
-	  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	  private LocalDateTime timestamp;
-	  private String message;
-	  private String description;
-	 
+
+	private int statusCode;
+	private String status;
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	private LocalDateTime timestamp;
+	private String message;
+	private String description;
 
 }

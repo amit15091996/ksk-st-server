@@ -7,13 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class InventoryItemDto {
-	
+
 	@NotBlank(message = "Please enter Inventory Item name (Mandatory)")
 	private String inventoryItemName;
 	@NotBlank(message = "Please enter Inventory Item category (Mandatory)")

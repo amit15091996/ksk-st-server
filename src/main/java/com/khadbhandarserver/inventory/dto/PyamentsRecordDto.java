@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -26,6 +25,5 @@ public class PyamentsRecordDto {
 	private double paymentAmountPerUnit;
 	@NotNull(message = "Please enter payment date (Mandatory)")
 	private LocalDate paymentDate;
-	
-	
+
 }

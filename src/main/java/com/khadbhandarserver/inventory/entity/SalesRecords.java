@@ -19,7 +19,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.TableGenerator;
 import lombok.AllArgsConstructor;
@@ -35,22 +34,22 @@ import lombok.Setter;
 @Entity
 public class SalesRecords {
 
-	@TableGenerator(allocationSize = 1,initialValue = 0,name = "sale_record_sequence")
+	@TableGenerator(allocationSize = 1, initialValue = 0, name = "sale_record_sequence")
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE,generator ="sale_record_sequence" )
+	@GeneratedValue(strategy = GenerationType.TABLE, generator = "sale_record_sequence")
 	private Long soldItemId;
-	@Column(columnDefinition="LONGTEXT",nullable = false)
+	@Column(columnDefinition = "LONGTEXT", nullable = false)
 	private String soldItemList;
-	@Column(nullable = false,columnDefinition = "boolean")
+	@Column(nullable = false, columnDefinition = "boolean")
 	private boolean isRecieptGenerated;
-	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,orphanRemoval = true,mappedBy = "salesRecords")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "salesRecords")
 	@JsonManagedReference
 	private List<RecieptsRecord> recieptsRecord;
-	@JsonFormat(shape = Shape.STRING,pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate sellDate;
-	@Column(length = 50,nullable = false)
+	@Column(length = 50, nullable = false)
 	private String partyName;
-	
+
 }

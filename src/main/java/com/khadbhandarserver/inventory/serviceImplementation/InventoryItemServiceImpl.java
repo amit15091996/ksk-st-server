@@ -18,93 +18,89 @@ public class InventoryItemServiceImpl implements InventoryItemService {
 
 	@Autowired
 	private InventoryItemRepository inventoryItemRepository;
-	
+
 	@Override
 	public Map<Object, Object> insertInventoryItem(InventoryItemDto inventoryItemDto) {
 
-         Map<Object, Object> inventoryItemMap=new HashMap<>();
-		
-        InventoryItem inventoryItem=new InventoryItem();
-        inventoryItem.setInventoryItemName(inventoryItemDto.getInventoryItemName());
-        inventoryItem.setInventoryItemCategory(inventoryItemDto.getInventoryItemCategory());
-        inventoryItem.setInventoryItemPrice(inventoryItemDto.getInventoryItemPrice());
-        inventoryItem.setInventoryItemQuantity(inventoryItemDto.getInventoryItemQuantity());
-        inventoryItem.setInventoryItemUnit(inventoryItemDto.getInventoryItemUnit());
-        inventoryItem.setInventoryItemTotalAmount(inventoryItemDto.getInventoryItemQuantity()*inventoryItemDto.getInventoryItemPrice());
-		
+		Map<Object, Object> inventoryItemMap = new HashMap<>();
+
+		InventoryItem inventoryItem = new InventoryItem();
+		inventoryItem.setInventoryItemName(inventoryItemDto.getInventoryItemName());
+		inventoryItem.setInventoryItemCategory(inventoryItemDto.getInventoryItemCategory());
+		inventoryItem.setInventoryItemPrice(inventoryItemDto.getInventoryItemPrice());
+		inventoryItem.setInventoryItemQuantity(inventoryItemDto.getInventoryItemQuantity());
+		inventoryItem.setInventoryItemUnit(inventoryItemDto.getInventoryItemUnit());
+		inventoryItem.setInventoryItemTotalAmount(
+				inventoryItemDto.getInventoryItemQuantity() * inventoryItemDto.getInventoryItemPrice());
+
 		try {
-			 InventoryItem inventoryItemSaved=this.inventoryItemRepository.save(inventoryItem);
-		if( inventoryItemSaved !=null) {
-			inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
-			inventoryItemMap.put(AppConstant.status, AppConstant.success);
-			inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
-		}
-		}
-		catch(Exception e) {
+			InventoryItem inventoryItemSaved = this.inventoryItemRepository.save(inventoryItem);
+			if (inventoryItemSaved != null) {
+				inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
+				inventoryItemMap.put(AppConstant.status, AppConstant.success);
+				inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
+			}
+		} catch (Exception e) {
 			throw new BadRequest(e.getMessage());
 		}
-	   return inventoryItemMap; 
-		
+		return inventoryItemMap;
+
 	}
 
 	@Override
 	public Map<Object, Object> deleteInventoryItem(Long inventoryItemId) {
-		
-       Map<Object, Object> inventoryItemMap=new HashMap<>();
-		
-		if(this.inventoryItemRepository.findById(inventoryItemId).isPresent()) {
-		this.inventoryItemRepository.deleteById(inventoryItemId);
-		inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
-		inventoryItemMap.put(AppConstant.status, AppConstant.success);
-		inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataDeletedSuccesFully);
-		}
-		else {
+
+		Map<Object, Object> inventoryItemMap = new HashMap<>();
+
+		if (this.inventoryItemRepository.findById(inventoryItemId).isPresent()) {
+			this.inventoryItemRepository.deleteById(inventoryItemId);
+			inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
+			inventoryItemMap.put(AppConstant.status, AppConstant.success);
+			inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataDeletedSuccesFully);
+		} else {
 			throw new NotFoundException(AppConstant.noRecordFound + inventoryItemId);
 		}
 		return inventoryItemMap;
-		
+
 	}
 
 	@Override
 	public Map<Object, Object> updateInventoryItem(Long inventoryItemId, InventoryItemDto inventoryItemDto) {
-		Map<Object, Object> inventoryItemMap=new HashMap<>();
-		
-		  if(this.inventoryItemRepository.findById(inventoryItemId).isPresent()) {
+		Map<Object, Object> inventoryItemMap = new HashMap<>();
+
+		if (this.inventoryItemRepository.findById(inventoryItemId).isPresent()) {
 			try {
-			
-				this.inventoryItemRepository.updateInventoryItemDetals(
-						inventoryItemDto.getInventoryItemName(),
-						inventoryItemDto.getInventoryItemCategory(),
-						inventoryItemDto.getInventoryItemQuantity(),
-						inventoryItemDto.getInventoryItemUnit(),
-						inventoryItemDto.getInventoryItemPrice(),
-						inventoryItemDto.getInventoryItemQuantity()*inventoryItemDto.getInventoryItemPrice(),
-						inventoryItemId
-						);
-						
-		
-			inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
-			inventoryItemMap.put(AppConstant.status, AppConstant.success);
-			inventoryItemMap.put(AppConstant.statusMessage, AppConstant.recordUpdatedSuccessFully +inventoryItemId);
+
+				this.inventoryItemRepository.updateInventoryItemDetals(inventoryItemDto.getInventoryItemName(),
+						inventoryItemDto.getInventoryItemCategory(), inventoryItemDto.getInventoryItemQuantity(),
+						inventoryItemDto.getInventoryItemUnit(), inventoryItemDto.getInventoryItemPrice(),
+						inventoryItemDto.getInventoryItemQuantity() * inventoryItemDto.getInventoryItemPrice(),
+						inventoryItemId);
+
+				inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
+				inventoryItemMap.put(AppConstant.status, AppConstant.success);
+				inventoryItemMap.put(AppConstant.statusMessage,
+						AppConstant.recordUpdatedSuccessFully + inventoryItemId);
+			} catch (Exception e) {
+				throw new BadRequest(e.getMessage());
 			}
-			catch (Exception e) {throw new BadRequest(e.getMessage());}
-			}
-			else {throw new NotFoundException(AppConstant.noRecordFound + inventoryItemId);}
-		
-		
+		} else {
+			throw new NotFoundException(AppConstant.noRecordFound + inventoryItemId);
+		}
+
 		return inventoryItemMap;
 	}
 
 	@Override
 	public Map<Object, Object> getAllInventoryItem() {
-		
-		  Map<Object, Object> inventoryItemMap=new HashMap<>();
-		
-		 inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
+
+		Map<Object, Object> inventoryItemMap = new HashMap<>();
+
+		inventoryItemMap.put(AppConstant.statusCode, AppConstant.ok);
 		inventoryItemMap.put(AppConstant.status, AppConstant.success);
 		inventoryItemMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
 		inventoryItemMap.put(AppConstant.response, this.inventoryItemRepository.findAll());
-		  
+
 		return inventoryItemMap;
 	}
 
