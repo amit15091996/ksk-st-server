@@ -282,8 +282,7 @@ public class InventoryController {
 	}
 
 	@GetMapping("/get-all-google-drive-file")
-	public ResponseEntity<Map<Object, Object>> getGoogleDriveFile(
-			@RequestParam(name = "file", required = true) MultipartFile mulFile) {
+	public ResponseEntity<Map<Object, Object>> getGoogleDriveFile() {
 
 		return ResponseEntity.ok(this.googleDriveServices.getAllFilesPresentInGdrive());
 	}
