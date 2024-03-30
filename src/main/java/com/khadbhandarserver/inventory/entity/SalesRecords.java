@@ -51,5 +51,6 @@ public class SalesRecords {
 	private LocalDate sellDate;
 	@Column(length = 50, nullable = false)
 	private String partyName;
+	
 
 }

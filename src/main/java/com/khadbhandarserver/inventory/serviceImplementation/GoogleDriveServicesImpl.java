@@ -94,7 +94,7 @@ public class GoogleDriveServicesImpl implements GoogleDriveServices {
 
 	public boolean retriveFileFromGdrive() {
 
-		String query = "mimeType='application/x-sql'" + " and " + "name='22-03-2024-16-35-07-khad-server.sql'";
+		String query = "mimeType='application/x-sql'" + " and " + "name='inventory.sql-25-03-2024-11-03-05'";
 
 		try {
 			Drive googleService = this.googleDriveUtils.getGoogleDriveInstance();

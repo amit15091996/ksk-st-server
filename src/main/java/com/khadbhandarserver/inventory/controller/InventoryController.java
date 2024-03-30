@@ -261,10 +261,13 @@ public class InventoryController {
 		return ResponseEntity.ok(this.pyamentsRecordService.getAllPaymentRecord());
 	}
 
-	@GetMapping("/get-product-via-category/{categoryName}")
-	public ResponseEntity<Map<Object, Object>> getDataViaCategory(@PathVariable("categoryName") String CategoryName) {
+	@GetMapping("/get-sales-transaction")
+	public ResponseEntity<Map<Object, Object>> getDataViaCategory(@RequestParam(name = "categoryName",required = false) String CategoryName,
+			@RequestParam(name = "month",required = false) String month, @RequestParam(name = "fromDate",required = false) String fromDate,
+			@RequestParam(name = "toDate",required = false) String toDate) {
 
-		return ResponseEntity.ok(this.productCategoryService.getCategoryWiseData(CategoryName));
+		return ResponseEntity
+				.ok(this.productCategoryService.getCategoryWiseData(CategoryName, month, fromDate, toDate));
 	}
 
 	@GetMapping("/get-all-category")
