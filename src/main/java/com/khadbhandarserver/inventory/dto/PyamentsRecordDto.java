@@ -19,8 +19,6 @@ public class PyamentsRecordDto {
 	private String payeeName;
 	@NotBlank(message = "Please enter product group(Mandatory)")
 	private String paidProductGroup;
-	@NotNull(message = "Please enter product quantity (Mandatory)")
-	private int paidProductQuantity;
 	@NotNull(message = "Please enter per unit payment amount(Mandatory)")
 	private double paymentAmountPerUnit;
 	@NotNull(message = "Please enter payment date (Mandatory)")

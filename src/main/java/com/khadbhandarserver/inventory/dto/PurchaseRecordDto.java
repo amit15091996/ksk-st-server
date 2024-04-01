@@ -2,6 +2,13 @@ package com.khadbhandarserver.inventory.dto;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -25,9 +32,15 @@ public class PurchaseRecordDto {
 	private String purchasedItemUnit;
 	@NotNull(message = "Please enter purchased Item price(Mandatory)")
 	private double purchasedItemPrice;
+	@JsonFormat(shape = Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	@NotNull(message = "Please enter item purchased date(Mandatory)")
 	private LocalDate purchaseDate;
 	@NotBlank(message = "Please enter Item purchased from(Mandatory)")
 	private String purchasedFrom;
+	@NotNull(message = "Please enter  Total Amount(Mandatory)")
+	private double totalAmount;
+
 
 }

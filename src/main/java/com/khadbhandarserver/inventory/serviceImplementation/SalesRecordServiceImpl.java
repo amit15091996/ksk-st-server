@@ -169,7 +169,6 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 		salesRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
 		salesRecordMap.put(AppConstant.response, salesRecord.stream().map(item -> {
 			AllSalesRecordDto allSalesRecord = new AllSalesRecordDto();
-			allSalesRecord.setRecieptGenerated(item.isRecieptGenerated());
 			allSalesRecord.setRecieptsRecord(item.getRecieptsRecord());
 			allSalesRecord.setSoldItemId(item.getSoldItemId());
 			allSalesRecord.setPartyName(item.getPartyName());
@@ -199,7 +198,6 @@ public class SalesRecordServiceImpl implements SalesRecordService {
 		salesRecordMap.put(AppConstant.statusMessage, AppConstant.dataFetchedSuccesfully);
 		salesRecordMap.put(AppConstant.response, salesRecord.stream().map(item -> {
 			AllSalesRecordDto allSalesRecord = new AllSalesRecordDto();
-			allSalesRecord.setRecieptGenerated(item.isRecieptGenerated());
 			allSalesRecord.setRecieptsRecord(item.getRecieptsRecord());
 			allSalesRecord.setSoldItemId(item.getSoldItemId());
 			allSalesRecord.setPartyName(item.getPartyName());

@@ -40,8 +40,6 @@ public class SalesRecords {
 	private Long soldItemId;
 	@Column(columnDefinition = "LONGTEXT", nullable = false)
 	private String soldItemList;
-	@Column(nullable = false, columnDefinition = "boolean")
-	private boolean isRecieptGenerated;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "salesRecords")
 	@JsonManagedReference
 	private List<RecieptsRecord> recieptsRecord;
