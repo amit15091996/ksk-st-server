@@ -71,10 +71,10 @@ public class PyamentsRecordServiceImpl implements PyamentsRecordService {
 		if (this.pyamentsRecordRepository.findById(paymentId).isPresent()) {
 			try {
 
-//				this.pyamentsRecordRepository.updatePaymentRecord(pyamentsRecordDto.getPayeeName(),
-//						pyamentsRecordDto.getPaymentDate(),
-//						pyamentsRecordDto.getPaymentAmountPerUnit(), pyamentsRecordDto.getPaidProductGroup(),
-//						paymentId);
+				this.pyamentsRecordRepository.updatePaymentRecord(pyamentsRecordDto.getPayeeName(),
+						pyamentsRecordDto.getPaymentDate(),
+						pyamentsRecordDto.getPaymentAmountPerUnit(), pyamentsRecordDto.getPaidProductGroup(),
+						paymentId);
 
 				paymentRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 				paymentRecordMap.put(AppConstant.status, AppConstant.success);
