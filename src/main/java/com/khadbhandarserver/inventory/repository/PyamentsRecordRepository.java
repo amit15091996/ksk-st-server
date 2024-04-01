@@ -16,15 +16,16 @@ import jakarta.transaction.Transactional;
 @Transactional
 public interface PyamentsRecordRepository extends JpaRepository<PyamentsRecord, Long> {
 
-	@Modifying(flushAutomatically = true, clearAutomatically = true)
-	@Query("UPDATE PyamentsRecord pr  SET pr.payeeName=:payeeName," + "pr.paymentAmountPerUnit=:paymentAmountPerUnit,"
-			+ "pr.paidProductGroup=:paidProductGroup," + "pr.paymentDate=:paymentDate,"
-			+ "pr.paidProductQuantity=:paidProductQuantity," + "pr.TotalPaidAmount=:TotalPaidAmount"
-			+ " WHERE pr.paymentId=:paymentId")
-	public void updatePaymentRecord(@Param("payeeName") String payeeName,
-			@Param("paymentAmountPerUnit") double paymentAmountPerUnit,
-			@Param("paidProductGroup") String paidProductGroup, @Param("paymentDate") LocalDate paymentDate,
-			@Param("paidProductQuantity") int paidProductQuantity, @Param("TotalPaidAmount") double TotalPaidAmount,
-			@Param("paymentId") Long paymentId);
+//	@Modifying(flushAutomatically = true, clearAutomatically = true)
+//	@Query("UPDATE PyamentsRecord pr SET pr.payeeName=:payeeName,"
+//			+ "pr.paymentDate=:paymentDate,"
+//			+ "pr.paymentAmount=:paymentAmount,"
+//			+ "pr.paidProductGroup=:paidProductGroup,"
+//			+ "WHERE pr.paymentId=:paymentId")
+//	public void updatePaymentRecord(@Param("payeeName") String payeeName,
+//			@Param("paymentDate") LocalDate paymentDate,
+//			@Param("paymentAmount") double paymentAmount,
+//			@Param("paidProductGroup") String paidProductGroup, 
+//			@Param("paymentId") Long paymentId);
 
 }

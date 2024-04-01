@@ -52,7 +52,6 @@ public class RecieptRecordServiceImpl implements RecieptRecordService {
 			try {
 				RecieptsRecord recieptsRecordSaved = this.RecieptsRecordRepository.save(recieptsRecord);
 				if (recieptsRecordSaved != null) {
-					this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(true, soldItemId);
 					recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 					recieptRecordMap.put(AppConstant.status, AppConstant.success);
 					recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataSubmitedsuccessfully);
@@ -74,8 +73,6 @@ public class RecieptRecordServiceImpl implements RecieptRecordService {
 		Optional<RecieptsRecord> recieptRecord = this.RecieptsRecordRepository.findById(recieptId);
 		if (recieptRecord.isPresent()) {
 			this.RecieptsRecordRepository.deleteById(recieptId);
-			this.salesRecordRepository.updateSalesRecordRecieptGenerationColumn(false,
-					recieptRecord.get().getSalesRecords().getSoldItemId());
 			recieptRecordMap.put(AppConstant.statusCode, AppConstant.ok);
 			recieptRecordMap.put(AppConstant.status, AppConstant.success);
 			recieptRecordMap.put(AppConstant.statusMessage, AppConstant.dataDeletedSuccesFully);

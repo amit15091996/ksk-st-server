@@ -183,7 +183,7 @@ public class InventoryController {
 
 	@PostMapping("/insert-purchase-record")
 	public ResponseEntity<Map<Object, Object>> savePurchaseRecord(
-			@RequestBody @Valid PurchaseRecordDto purchaseRecordDto) {
+			@RequestBody @Valid List<PurchaseRecordDto> purchaseRecordDto) {
 
 		return ResponseEntity.ok(this.purchaseRecordService.insertPurchaseRecord(purchaseRecordDto));
 	}

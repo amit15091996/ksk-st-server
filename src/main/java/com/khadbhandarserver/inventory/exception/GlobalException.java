@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.server.ResponseStatusException;
+
 import com.khadbhandarserver.inventory.helper.AppConstant;
 
 @RestControllerAdvice
@@ -21,9 +23,7 @@ public class GlobalException {
 
 		CustomException customException = new CustomException(AppConstant.Not_Found, AppConstant.Not_Found_desc,
 				LocalDateTime.now(), notFoundException.getMessage(), request.getDescription(false));
-
 		Map<Object, Object> notFound = new HashMap<>();
-
 		notFound.put(AppConstant.statusCode, customException.getStatusCode());
 		notFound.put(AppConstant.status, customException.getStatus());
 		notFound.put(AppConstant.timeStamp, customException.getTimestamp().toString());
@@ -53,6 +53,7 @@ public class GlobalException {
 	@ExceptionHandler(value = MethodArgumentNotValidException.class)
 	public ResponseEntity<Map<Object, Object>> MethodArgumentNotValid(MethodArgumentNotValidException methodArgument,
 			WebRequest request) {
+		
 
 		CustomException methodArgumentException = new CustomException(AppConstant.Bad_Request,
 				AppConstant.Bad_Request_desc, LocalDateTime.now(), methodArgument.getAllErrors().stream()
@@ -107,4 +108,25 @@ public class GlobalException {
 
 	}
 
+	
+	
+	@ExceptionHandler(ResponseStatusException.class)
+	public ResponseEntity<Map<Object, Object>> responseStatusError(ResponseStatusException responseStatusException,
+			WebRequest request) {
+
+		CustomException responseStatus = new CustomException(AppConstant.Bad_Request,
+				AppConstant.Bad_Request_desc, LocalDateTime.now(), "Please check your input field as all field's are mandatory  ",
+				request.getDescription(false));
+		Map<Object, Object> responseStatusMap = new HashMap<>();
+		responseStatusMap.put(AppConstant.statusCode, responseStatus.getStatusCode());
+		responseStatusMap.put(AppConstant.status, responseStatus.getStatus());
+		responseStatusMap.put(AppConstant.timeStamp, responseStatus.getTimestamp().toString());
+		responseStatusMap.put(AppConstant.statusMessage, responseStatus.getMessage());
+		responseStatusMap.put(AppConstant.description, responseStatus.getDescription());
+		return ResponseEntity.ok(responseStatusMap);
+
+	}
+	
+	 
+	
 }
