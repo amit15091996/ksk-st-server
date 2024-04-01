@@ -44,7 +44,7 @@ public class PyamentsRecord {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate paymentDate;
-	@Column(nullable = false)
+	@Column(nullable = false,columnDefinition = "Decimal(20,2)")
 	private double paymentAmount;
 	@Column(length = 20, nullable = false)
 	private String paidProductGroup;
